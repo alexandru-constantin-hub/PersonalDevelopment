@@ -1,0 +1,45 @@
+﻿<EditForm Model="@tak" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label>
+            Name:
+            <InputText @bind-Value="tak.Name"/>
+        </label>
+    </div>
+    <div class="form-group">
+        <label>
+            Description:
+             <InputText @bind-Value="tak.Description"/>
+        </label> 
+    </div>
+    <div class="form-group">
+        <label>
+            Complete procentage:
+             <InputNumber @bind-Value="tak.CompletedProcentage"/>
+        </label> 
+    </div>
+    <div class="form-group">
+        <label>
+            Status:
+            <InputSelect @bind-Value="@tak.Status"> 
+            <option value="IU">Important / Urgent</option>
+            <option value="INU">Important / Non Urgent</option>
+            <option value="NIU">Non Important / Urgent</option>
+            <option value="NINU">Non Important / Non Urgent</option>
+         </InputSelect>
+        </label>
+        
+    </div>
+   
+    <button type="submit" class="btn btn-success btn-block">
+        @ButtonText
+    </button>
+    
+</EditForm>
+
+@code {
+    [Parameter] public Tak tak { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+}

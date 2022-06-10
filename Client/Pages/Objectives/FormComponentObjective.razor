@@ -20,13 +20,6 @@
         </label>
         
     </div>
-    <div class="form-group">
-        <label>
-            Status:
-            <InputText @bind-Value="objective.Status" />
-        </label>
-        
-    </div>
    
     <button type="submit" class="btn btn-success btn-block">
         @ButtonText
@@ -38,5 +31,5 @@
     [Parameter] public Objective objective { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
-
+    
 }

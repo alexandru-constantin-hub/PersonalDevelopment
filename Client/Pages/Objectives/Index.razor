@@ -4,7 +4,7 @@
 @inject IJSRuntime js
 @attribute [Authorize]
 
-<h3>Values</h3>
+<h3>Objectives</h3>
 
 @if (Model == null)
 {
@@ -29,7 +29,6 @@
                 <td>@objective.Description</td>
                 <td>@objective.Name</td>
                 <td>@objective.CompletedProcentage</td>
-                <td>@objective.Status</td>
                 <td>
                     <a href="/objectives/view/@objective.Id" class="btn btn-primary">Detail</a>
                     <a href="/objectives/edit/@objective.Id" class="btn btn-primary">Edit</a>

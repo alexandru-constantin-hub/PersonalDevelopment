@@ -15,8 +15,8 @@ namespace PersonalDevelopment.Shared.Models
 
             public string? Description { get; set; }
 
-
-            public byte? CompletedProcentage { get; set; }
+        
+            public int? CompletedProcentage { get; set; }
 
             public string? Status { get; set; }
 

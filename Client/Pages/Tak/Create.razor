@@ -1,0 +1,21 @@
+﻿@page "/tasks/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using System.Security.Claims
+
+<h3>Create a value</h3>
+<FormComponentTask ButtonText="Create a task" tak="tak" OnValidSubmit="@CreateTak" />
+
+@code {
+    Tak tak = new Tak();
+    
+    private async Task CreateTak()
+    {
+        await _client.PostAsJsonAsync("/api/Taks", tak);
+        _navManager.NavigateTo("/tasks");
+    }
+
+    
+}

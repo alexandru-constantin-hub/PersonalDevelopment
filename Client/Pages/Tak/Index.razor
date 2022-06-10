@@ -1,0 +1,63 @@
+﻿@page "/tasks"
+@using Microsoft.AspNetCore.Authorization
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3>Tasks</h3>
+
+@if (Model == null)
+{
+    <div class="alert alert-info" role="alert">
+        Loading values...
+    </div>
+} else
+{
+    <a href="/tasks/create" class="btn btn-secondary">Create new task</a>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>CompletedProcentage</th>
+            <th>Status</th>
+        </tr>
+        @foreach (var tak in Model)
+        {
+            <tr>
+                <td>@tak.Name</td>
+                <td>@tak.Description</td>
+                <td>@tak.CompletedProcentage</td>
+                <td>@tak.Status</td>
+                <td>
+                    <a href="/tasks/view/@tak.Id" class="btn btn-primary">Detail</a>
+                    <a href="/tasks/edit/@tak.Id" class="btn btn-primary">Edit</a>
+                    <button class="btn btn-danger" @onclick="(()=>Delete(tak.Id))"></button>
+                </td>
+            </tr>
+            
+        }
+    </table>
+}
+
+@code {
+    private List<Tak> Model;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Model = await _client.GetFromJsonAsync<List<Tak>>("/api/Taks");
+    }
+
+    async Task Delete(int takId)
+    {
+        var tak = Model.First(q => q.Id == takId);
+        var confirm = await js.InvokeAsync<bool>("confirm", "Do you want to delete " + tak.Name);
+        if (confirm)
+        {
+            await _client.DeleteAsync("/api/taks/" + takId);
+            await OnInitializedAsync();
+        }
+        
+    }
+
+}
+    

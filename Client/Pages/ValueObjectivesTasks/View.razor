@@ -1,12 +1,12 @@
-﻿@page "/objectives/view/{id:int}"
+﻿@page "/vot/view/{id:int}"
 @using Microsoft.AspNetCore.Authorization
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
 
-<h3>Objective</h3>
+<h3>View example</h3>
 
-@if (objective == null)
+@if (value == null)
 {
     <div class="alert alert-info" role="alert">
         Loading values...
@@ -20,12 +20,10 @@
         
         
             <tr>
-                <td>@objective.Name</td>
-                <td>@objective.Description</td>
-                <td>@objective.CompletedProcentage</td>
+                <td>@value.Name</td>
                 <td>
-                    <a href="/objectives/view/@objective.Id" class="btn btn-primary">Detail</a>
-                    <a href="/objectives/edit/@objective.Id" class="btn btn-primary">Edit</a>
+                    <a href="/values/view/@value.Id" class="btn btn-primary">Detail</a>
+                    <a href="/values/edit/@value.Id" class="btn btn-primary">Edit</a>
                     <button class="btn btn-danger" @onclick="(()=>Delete())"></button>
                 </td>
             </tr>
@@ -36,20 +34,20 @@
 
 @code {
     [Parameter] public int id { get; set; }
-    Objective objective = new Objective();
+    Value value = new Value();
 
     protected async override Task OnParametersSetAsync()
     {
-        objective = await _client.GetFromJsonAsync<Objective>("/api/objectives/" + id);
+        value = await _client.GetFromJsonAsync<Value>("/api/values/" + id);
     }
 
     async Task Delete()
     {
         
-        var confirm = await js.InvokeAsync<bool>("confirm", "Do you want to delete " + objective.Name);
+        var confirm = await js.InvokeAsync<bool>("confirm", "Do you want to delete " + value.Name);
         if (confirm)
         {
-            await _client.DeleteAsync("/api/objetives/" + objective.Id);
+            await _client.DeleteAsync("/api/values/" + value.Id);
             await OnInitializedAsync();
         }
         

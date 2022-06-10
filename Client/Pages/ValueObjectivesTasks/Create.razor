@@ -1,0 +1,21 @@
+﻿@page "/vot/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using System.Security.Claims
+
+<h3>Create a value</h3>
+<FormComponent ButtonText="Create a value" value="value" OnValidSubmit="@CreateValue" />
+
+@code {
+    Value value = new Value();
+    
+    private async Task CreateValue()
+    {
+        await _client.PostAsJsonAsync("/api/Values", value);
+        _navManager.NavigateTo("/values");
+    }
+
+    
+}

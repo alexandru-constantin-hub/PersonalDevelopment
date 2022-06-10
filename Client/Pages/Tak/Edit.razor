@@ -1,0 +1,26 @@
+﻿@page "/tasks/edit/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+
+<h3>Edit value</h3>
+
+<FormComponentTask ButtonText="Update" OnValidSubmit="@EditTak" tak="tak" />
+
+
+
+@code {
+    [Parameter] public int id { get; set; }
+    Tak tak = new Tak();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        tak = await _client.GetFromJsonAsync<Tak>($"/api/Taks/{id}");
+    }
+
+    async Task EditTak()
+    {
+        await _client.PutAsJsonAsync($"/api/Taks/{id}", tak);
+        _navManager.NavigateTo("/tasks");
+    }
+}

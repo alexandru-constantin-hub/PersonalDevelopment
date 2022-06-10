@@ -1,0 +1,54 @@
+﻿@page "/tasks/view/{id:int}"
+@using Microsoft.AspNetCore.Authorization
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3>Task detail</h3>
+
+@if (tak == null)
+{
+    <div class="alert alert-info" role="alert">
+        Loading values...
+    </div>
+} else
+{
+    <table>
+        <tr>
+            <th>Name</th>
+        </tr>
+        
+        
+            <tr>
+                <td>@tak.Name</td>
+                <td>
+                    <a href="/tasks/edit/@tak.Id" class="btn btn-primary">Edit</a>
+                    <button class="btn btn-danger" @onclick="(()=>Delete())"></button>
+                </td>
+            </tr>    
+    </table>
+}
+
+@code {
+    [Parameter] public int id { get; set; }
+    Tak tak = new Tak();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        tak = await _client.GetFromJsonAsync<Tak>("/api/taks/" + id);
+    }
+
+    async Task Delete()
+    {
+        
+        var confirm = await js.InvokeAsync<bool>("confirm", "Do you want to delete " + tak.Name);
+        if (confirm)
+        {
+            await _client.DeleteAsync("/api/taks/" + tak.Id);
+            await OnInitializedAsync();
+        }
+        
+    }
+
+    
+}
