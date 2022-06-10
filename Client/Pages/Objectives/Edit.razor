@@ -1,0 +1,26 @@
+﻿@page "/objectives/edit/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+
+<h3>Edit value</h3>
+
+<FormComponentObjective ButtonText="Update" OnValidSubmit="@EditValue" objective="objective" />
+
+
+
+@code {
+    [Parameter] public int id { get; set; }
+    Objective objective = new Objective();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        objective = await _client.GetFromJsonAsync<Objective>($"/api/Objectives/{id}");
+    }
+
+    async Task EditValue()
+    {
+        await _client.PutAsJsonAsync($"/api/Objectives/{id}", objective);
+        _navManager.NavigateTo("/objectives");
+    }
+}

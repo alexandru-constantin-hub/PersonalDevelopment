@@ -1,0 +1,57 @@
+﻿@page "/values"
+@using Microsoft.AspNetCore.Authorization
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3>Values</h3>
+
+@if (Model == null)
+{
+    <div class="alert alert-info" role="alert">
+        Loading values...
+    </div>
+} else
+{
+    <a href="/values/create" class="btn btn-secondary">Create new value</a>
+    <table>
+        <tr>
+            <th>Name</th>
+        </tr>
+        @foreach (var value in Model)
+        {
+            <tr>
+                <td>@value.Name</td>
+                <td>
+                    <a href="/values/view/@value.Id" class="btn btn-primary">Detail</a>
+                    <a href="/values/edit/@value.Id" class="btn btn-primary">Edit</a>
+                    <button class="btn btn-danger" @onclick="(()=>Delete(value.Id))"></button>
+                </td>
+            </tr>
+            
+        }
+    </table>
+}
+
+@code {
+    private List<Value> Model;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Model = await _client.GetFromJsonAsync<List<Value>>("/api/values");
+    }
+
+    async Task Delete(int valueId)
+    {
+        var value = Model.First(q => q.Id == valueId);
+        var confirm = await js.InvokeAsync<bool>("confirm", "Do you want to delete " + value.Name);
+        if (confirm)
+        {
+            await _client.DeleteAsync("/api/values/" + valueId);
+            await OnInitializedAsync();
+        }
+        
+    }
+
+}
+    

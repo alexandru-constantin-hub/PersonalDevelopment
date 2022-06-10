@@ -1,0 +1,21 @@
+﻿@page "/objectives/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using System.Security.Claims
+
+<h3>Create an objective</h3>
+<FormComponentObjective ButtonText="Create a objective" objective="objective" OnValidSubmit="@CreateObjective" />
+
+@code {
+    Objective objective = new Objective();
+    
+    private async Task CreateObjective()
+    {
+        await _client.PostAsJsonAsync("/api/Objectives", objective);
+        _navManager.NavigateTo("/objectives");
+    }
+    
+    
+}
