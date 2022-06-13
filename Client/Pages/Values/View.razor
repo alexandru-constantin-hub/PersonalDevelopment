@@ -1,5 +1,6 @@
 ﻿@page "/values/view/{id:int}"
 @using Microsoft.AspNetCore.Authorization
+@using PersonalDevelopment.Client.Shared.Components
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
@@ -8,11 +9,13 @@
 
 @if (value == null)
 {
-    <div class="alert alert-info" role="alert">
-        Loading values...
-    </div>
+     <Loading />
 } else
 {
+    
+    
+    
+    
     <table>
         <tr>
             <th>Name</th>

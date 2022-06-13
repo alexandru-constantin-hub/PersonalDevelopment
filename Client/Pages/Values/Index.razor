@@ -1,5 +1,6 @@
 ﻿@page "/values"
 @using Microsoft.AspNetCore.Authorization
+@using PersonalDevelopment.Client.Shared.Components
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
@@ -8,31 +9,30 @@
 
 @if (Model == null)
 {
-    <div class="alert alert-info" role="alert">
-        Loading values...
-    </div>
-} else
+    <Loading />
+}
+else
 {
     <a href="/values/create" class="btn btn-secondary">Create new value</a>
-    <table>
-        <tr>
-            <th>Name</th>
-        </tr>
+
+    <div class="card-group">
         @foreach (var value in Model)
         {
-            <tr>
-                <td>@value.Name</td>
-                <td>
-                    <a href="/values/view/@value.Id" class="btn btn-primary">Detail</a>
-                    <a href="/values/edit/@value.Id" class="btn btn-primary">Edit</a>
-                    <button class="btn btn-danger" @onclick="(()=>Delete(value.Id))"></button>
-                </td>
-            </tr>
-            
+            <div class="card">
+                <img class="card-img-top card-value-image" alt="Value image" style="background-image: url('/img/wandering_mind.svg');">
+                <div class="card-body">
+                    <h5 class="card-title">@value.Name</h5>
+                    <p class="card-text">@value.Description</p>
+                    <p class="card-text">
+                        <a href="/values/view/@value.Id" class="btn btn-primary">Detail</a>
+                        <a href="/values/edit/@value.Id" class="btn btn-primary">Edit</a>
+                        <button class="btn btn-danger" @onclick="(()=>Delete(value.Id))"></button>
+                    </p>
+                </div>
+            </div>
         }
-    </table>
+    </div>
 }
-
 @code {
     private List<Value> Model;
 
@@ -50,8 +50,7 @@
             await _client.DeleteAsync("/api/values/" + valueId);
             await OnInitializedAsync();
         }
-        
+
     }
 
 }
-    
