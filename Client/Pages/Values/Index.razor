@@ -15,19 +15,26 @@ else
 {
     <a href="/values/create" class="btn btn-secondary">Create new value</a>
 
-    <div class="card-group">
+    <div class="row row-cols-1 row-cols-md-2 g-4">
         @foreach (var value in Model)
         {
-            <div class="card">
-                <img class="card-img-top card-value-image" alt="Value image" style="background-image: url('/img/wandering_mind.svg');">
-                <div class="card-body">
-                    <h5 class="card-title">@value.Name</h5>
-                    <p class="card-text">@value.Description</p>
-                    <p class="card-text">
-                        <a href="/values/view/@value.Id" class="btn btn-primary">Detail</a>
-                        <a href="/values/edit/@value.Id" class="btn btn-primary">Edit</a>
-                        <button class="btn btn-danger" @onclick="(()=>Delete(value.Id))"></button>
-                    </p>
+            <div class="col">
+                <div class="card h-100 d-flex flex-row">
+                   
+                   <div class="card-value-image" style="background-image: url('https://localhost:7106/img/wandering_mind.svg');"></div>
+                     
+                    <div class="card-body">
+                        <div class="value-card-content">
+                            <h5 class="card-title">@value.Name</h5>
+                            <p class="card-text">@value.Description</p>
+                            <p class="card-text">
+                                <a href="/values/view/@value.Id" class="btn btn-primary">Detail</a>
+                                <a href="/values/edit/@value.Id" class="btn btn-primary">Edit</a>
+                                <button class="btn btn-danger" @onclick="(()=>Delete(value.Id))"></button>
+                            </p>
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
         }
