@@ -1,20 +1,47 @@
-﻿<EditForm Model="@value" OnValidSubmit="@OnValidSubmit">
-    <DataAnnotationsValidator />
-    <div class="form-group">
-        <InputText @bind-Value="value.Name"/>
-        <ValidationMessage For="@(()=> value.Name)" />
-        <InputText @bind-Value="value.Description"/>
+﻿@inject NavigationManager _nav;
+
+<div class="card">
+    <div class="card-header pb-0">
+        <h5>Record a new value</h5>
+        <span>Did you discover a new value in yourself? Excellent, write it down do not forget it</span>
     </div>
-   
-    <button type="submit" class="btn btn-success btn-block">
-        @ButtonText
-    </button>
     
-</EditForm>
+        <EditForm Model="@value" OnValidSubmit="@OnValidSubmit" class="theme-form">
+            <div class="card-body">
+            <DataAnnotationsValidator />
+                <div class="form-group mb-3">
+                    <label for="valueName" class="col-form-label pt-o">Value Name </label>
+                    <InputText @bind-Value="value.Name" class="form-control" id="valueName" />
+                    <ValidationMessage For="@(()=> value.Name)" />
+                </div>
+                <div class="form-group mb-3">
+                    <label for="valueDescription" class="col-form-label pt-o">Description</label>
+                    <InputText @bind-Value="value.Description" class="form-control" id="valueDescription" />
+                </div>
+                <div class="form-group mb-3">
+                    <label for="valueImageLink" class="col-form-label pt-o">Image link</label>
+                    <InputText @bind-Value="value.ImageLink" class="form-control" id="valueImageLink" />
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary mt-3">
+                        @ButtonText
+                </button>
+                <button class="btn btn-secondary mt-3" @onclick="@(()=>_nav.NavigateTo(CancelLink))">
+                        Cancel
+                </button>
+            </div>
+            
+        </EditForm>
+   
+</div>
+
 
 @code {
     [Parameter] public Value value { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public string CancelLink { get; set; } = "/";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
+    
 
 }

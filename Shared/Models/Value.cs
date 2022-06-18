@@ -19,8 +19,10 @@ namespace PersonalDevelopment.Shared.Models
 
         public string? Description { get; set; }
 
-        public string? UserId { get; set; }
+        public string? ImageLink { get; set; }
 
+        public string? UserId { get; set; }
+        
 
     }
 }

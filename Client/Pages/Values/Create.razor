@@ -5,8 +5,17 @@
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using System.Security.Claims
 
-<h3>Create a value</h3>
-<FormComponent ButtonText="Create a value" value="value" OnValidSubmit="@CreateValue" />
+<div class="row">
+    <div class="col-10">
+        <Breadcrumb BreadcrumbElements=@breadcrumbLink ActivePage="Create a value" Title="Create a value" />
+    </div>
+    <Bookmark Link="/values/" Icon="bi-arrow-return-left"/>
+</div>
+<div class="row">
+        <FormComponent ButtonText="Create the value" value="value" OnValidSubmit="@CreateValue" CancelLink="/values"/> 
+</div>
+
+
 
 @code {
     Value value = new Value();
@@ -17,5 +26,11 @@
         _navManager.NavigateTo("/values");
     }
 
-    
+    public Dictionary<string, string> breadcrumbLink { get; set; } =
+    new Dictionary<string, string>()
+            {
+                { "Home", "/" },
+                { "Values", "/values" }
+            };
+
 }

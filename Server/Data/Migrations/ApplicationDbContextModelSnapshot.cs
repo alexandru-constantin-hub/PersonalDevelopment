@@ -373,15 +373,36 @@ namespace PersonalDevelopment.Server.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<bool?>("Achievable")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("CompletedProcentage")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("Measurable")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("Relevant")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Specific")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Time")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("TimeLimit")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
@@ -429,6 +450,9 @@ namespace PersonalDevelopment.Server.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageLink")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")

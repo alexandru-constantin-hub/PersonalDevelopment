@@ -3,24 +3,39 @@
 @inject NavigationManager _navManager
 
 
-<h3>Edit value</h3>
+<div class="row">
+    <div class="col-10">
+        <Breadcrumb BreadcrumbElements=@breadcrumbLink ActivePage="Edit your value" Title="Edit your value" />
+    </div>
+    <Bookmark Link="/values/" Icon="bi-arrow-return-left"/>
+</div>
+<div class="row">
+        <FormComponent ButtonText="Update" OnValidSubmit="@EditValue" value="value" CancelLink="/values"/> 
+</div>
 
-<FormComponent ButtonText="Update" OnValidSubmit="@EditObjective" objective="objective" />
+
 
 
 
 @code {
     [Parameter] public int id { get; set; }
-    Objective objective = new Objective();
+    Value value = new Value();
 
     protected async override Task OnParametersSetAsync()
     {
-        objective = await _client.GetFromJsonAsync<Objective>($"/api/Objectives/{id}");
+        value = await _client.GetFromJsonAsync<Value>($"/api/Values/{id}");
     }
 
-    async Task EditObjective()
+    async Task EditValue()
     {
-        await _client.PutAsJsonAsync($"/api/Objectives/{id}", objective);
-        _navManager.NavigateTo("/objectives");
+        await _client.PutAsJsonAsync($"/api/Values/{id}", value);
+        _navManager.NavigateTo("/values");
     }
+    
+    public Dictionary<string, string> breadcrumbLink { get; set; } =
+    new Dictionary<string, string>()
+            {
+                { "Home", "/" },
+                { "Values", "/values" }
+            };
 }

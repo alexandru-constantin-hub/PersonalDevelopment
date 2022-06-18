@@ -1,0 +1,20 @@
+﻿<div>
+    @AccordionText
+    <button onclick="@toggle">Toggle</button>
+</div>
+<div class='@(hide ? "" :"d-none")'>
+    @AccordionTextHide
+</div>
+
+@code {
+    [ParameterAttribute]
+    public string AccordionText { get; set; }
+    [ParameterAttribute]
+    public string AccordionTextHide { get; set; }
+    public bool hide { get; set; }
+
+    public void toggle(){
+        hide = !hide;
+    }
+    
+}

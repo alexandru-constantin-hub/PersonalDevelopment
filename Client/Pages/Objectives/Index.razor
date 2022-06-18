@@ -11,7 +11,8 @@
     <div class="alert alert-info" role="alert">
         Loading values...
     </div>
-} else
+}
+else
 {
     <a href="/objectives/create" class="btn btn-secondary">Create new objective</a>
     <table>
@@ -28,6 +29,7 @@
                 <td>@objective.Name</td>
                 <td>@objective.Description</td>
                 <td>@objective.Name</td>
+
                 <td>@objective.CompletedProcentage</td>
                 <td>
                     <a href="/objectives/view/@objective.Id" class="btn btn-primary">Detail</a>
@@ -35,9 +37,56 @@
                     <button class="btn btn-danger" @onclick="(()=>Delete(objective.Id))"></button>
                 </td>
             </tr>
-            
+
         }
     </table>
+
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        @foreach (var value in Model)
+        {
+            <div class="col flex-column">
+                <div class="card h-100 d-flex flex-row">
+
+                    <div class="card-value-image" style="background-image: url('https://localhost:7106/img/wandering_mind.svg');"></div>
+
+                    <div class="card-body">
+                        <div class="card-content">
+                            <h5 class="card-title">@value.Name</h5>
+                            <p class="card-text">@value.Description</p>
+                            <p class="card-text">@value.TimeLimit</p>
+                            <p class="card-text">
+                                <a href="/values/view/@value.Id" class="btn btn-primary">Detail</a>
+                                <a href="/values/edit/@value.Id" class="btn btn-primary">Edit</a>
+                                <button class="btn btn-danger" @onclick="(()=>Delete(value.Id))"></button>
+                            </p>
+                        </div>
+                       
+                    </div>
+                </div>
+                 <div class="accordion" id="accordionExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Accordion Item #1
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+            </div>
+
+        }
+    </div>
+
+
+
+
+
 }
 
 @code {
@@ -57,8 +106,7 @@
             await _client.DeleteAsync("/api/objectives/" + objectiveId);
             await OnInitializedAsync();
         }
-        
+
     }
-    
+
 }
-    

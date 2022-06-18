@@ -1,0 +1,69 @@
+﻿//title of the page
+.page-header {
+    padding-bottom: 1rem;
+    padding-top:1rem;
+}
+
+//card for Values section
+.card-values {
+    min-height: 200px;
+}
+
+// more button in card
+
+.setting-list {
+    position: absolute;
+    right: 20px;
+    top: 22px;
+    display: inline-block;
+    z-index: 1;
+    background-color: $white;
+
+    .setting-option {
+        overflow: hidden;
+        transition: 0.3s ease-in-out;
+        text-align: right;
+    }
+    
+    i {
+        cursor: pointer;
+    }
+}
+
+//Buttons in header of page
+.bookmark {
+    text-align: right;
+
+    ul {
+        padding-left: 0px;
+        list-style-type: none;
+        margin-bottom: 0;
+        padding-right: 0px;
+
+        li {
+            border: 1px solid #e6edef;
+            background-color: $white;
+            display: inline-block;
+            border-radius: 8px;
+            -webkit-transition: all 0.5s ease;
+            transition: all 0.5s ease;
+
+            a {
+                position: relative;
+                color: $primary;
+                display: block;
+                width: 40px;
+                height: 40px;
+
+                .bi {
+                    width: 15px;
+                    height: 15px;
+                    display: block;
+                    margin: auto;
+                    padding-top: 8px;
+                    color: $primary;
+                }
+            }
+        }
+    }
+}

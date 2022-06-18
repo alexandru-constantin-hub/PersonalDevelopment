@@ -1,0 +1,12 @@
+﻿<div class="col-2 d-flex align-items-center justify-content-end">
+    <div class="bookmark pb-2">
+        <ul>
+            <li><a href="@Link"><i class="bi @Icon"></i></a></li>
+        </ul>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string Link { get; set; }
+    [Parameter] public string Icon { get; set; }
+}
