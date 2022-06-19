@@ -6,8 +6,15 @@
 @using System.Security.Claims
 
 
-<h3>Create an objective</h3>
-<FormComponentObjective ButtonText="Create a objective" objective="objective" OnValidSubmit="@CreateObjective" />
+<div class="row">
+    <div class="col-10">
+        <Breadcrumb BreadcrumbElements=@breadcrumbLink ActivePage="Create an objective" Title="Create an objective" />
+    </div>
+    <Bookmark Link="/values/" Icon="bi-arrow-return-left"/>
+</div>
+<div class="row">
+       <FormComponentObjectives ButtonText="Create" objective="objective" OnValidSubmit="@CreateObjective" CancelLink="/objectives" />
+</div>
 
 @code {
     Objective objective = new Objective();
@@ -17,5 +24,12 @@
         await _client.PostAsJsonAsync("/api/Objectives", objective);
         _navManager.NavigateTo("/objectives");
     }
+
+    public Dictionary<string, string> breadcrumbLink { get; set; } =
+    new Dictionary<string, string>()
+            {
+                { "Home", "/" },
+                { "Objectives", "/objectives" }
+            };
     
 }

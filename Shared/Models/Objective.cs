@@ -15,18 +15,18 @@ namespace PersonalDevelopment.Shared.Models
         public string? Description { get; set; }
 
         public DateTime? TimeLimit { get; set; }
-        
-        public int? CompletedProcentage { get; set; }
 
-        public bool? Specific { get; set; }
+        public int CompletedProcentage { get; set; } = 0;
 
-        public bool? Measurable { get; set; }
+        public bool Specific { get; set; } = false;
 
-        public bool? Achievable { get; set; }
+        public bool Measurable { get; set; } = false;
 
-        public bool? Relevant { get; set; }
+        public bool Achievable { get; set; } = false;
 
-        public bool? Time { get; set; }
+        public bool Relevant { get; set; } = false;
+
+        public bool Time { get; set; } = false;
 
         public string? ImageLink { get; set; }
 

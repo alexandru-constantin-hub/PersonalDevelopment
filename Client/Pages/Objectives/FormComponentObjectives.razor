@@ -1,0 +1,73 @@
+﻿@inject NavigationManager _nav;
+
+<div class="card">
+    <div class="card-header pb-0">
+        <h5>Record a new objective</h5>
+        <span>An object help you to stay focus on what is important in your life</span>
+    </div>
+    
+        <EditForm Model="@objective" OnValidSubmit="@OnValidSubmit" class="theme-form">
+            <div class="card-body">
+            <DataAnnotationsValidator />
+                <div class="form-group mb-3">
+                    <label for="objectiveName" class="col-form-label pt-o">Objective Name </label>
+                    <InputText @bind-Value="objective.Name" class="form-control" id="objectiveName" />
+                    <ValidationMessage For="@(()=>objective.Name)" />
+                </div>
+                <div class="form-group mb-3">
+                    <label for="objectiveDescription" class="col-form-label pt-o">Description</label>
+                    <InputText @bind-Value="objective.Description" class="form-control" id="objectiveDescription" />
+                </div>
+                <div class="form-group mb-3">
+                    <label for="objectiveTimeLimit" class="col-form-label pt-o">Deadline</label>
+                    <InputDate @bind-Value="objective.TimeLimit" class="form-control" id="objectiveTimeLimit" />
+                </div>
+                <div class="form-group mb-3">
+                    <label for="objectiveCompletedProcentage" class="col-form-label pt-o">CompletedProcentage</label>
+                    <InputNumber @bind-Value="objective.CompletedProcentage" class="form-control" id="objectiveCompletedProcentage" />
+                </div>
+                <div class="form-check form-switch mb-3">
+                    <label for="objectiveSpecific" class="form-check-label">Specific</label>
+                    <InputCheckbox @bind-Value="objective.Specific" class="form-check-input" id="objectiveSpecific" />
+                </div>
+                 <div class="form-check form-switch mb-3">
+                    <label for="objectiveMeasurable" class="form-check-label">Measurable</label>
+                    <InputCheckbox @bind-Value="objective.Measurable" class="form-check-input" id="objectiveMeasurable" />
+                </div>
+                 <div class="form-check form-switch mb-3">
+                    <label for="objectiveAchievable" class="form-check-label">Achievable</label>
+                    <InputCheckbox @bind-Value="objective.Achievable" class="form-check-input" id="objectiveAchievable" />
+                </div>
+                <div class="form-check form-switch mb-3">
+                    <label for="objectiveRelevant" class="form-check-label">Relevant</label>
+                    <InputCheckbox @bind-Value="objective.Relevant" class="form-check-input" id="objectiveRelevant" />
+                </div>
+                <div class="form-check form-switch mb-3">
+                    <label for="objectiveTime" class="form-check-label">Time</label>
+                    <InputCheckbox @bind-Value="objective.Time" class="form-check-input" id="objectiveTime" />
+                </div>
+                <div class="form-group mb-3">
+                    <label for="objectiveImageLink" class="col-form-label pt-o">Image link</label>
+                    <InputText @bind-Value="objective.ImageLink" class="form-control" id="objectiveImageLink" />
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary mt-3">
+                        @ButtonText
+                </button>
+                <button class="btn btn-secondary mt-3" @onclick="@(()=>_nav.NavigateTo(CancelLink))">
+                        Cancel
+                </button>
+            </div>
+            
+        </EditForm>
+   
+</div>
+
+
+@code {
+    [Parameter] public Objective objective { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public string CancelLink { get; set; } = "/objectives";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+}
