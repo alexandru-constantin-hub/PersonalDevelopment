@@ -2,10 +2,17 @@
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
+<div class="row">
+    <div class="col-10">
+        <Breadcrumb BreadcrumbElements=@breadcrumbLink ActivePage="Edit your objective" Title="Edit your objective" />
+    </div>
+    <Bookmark Link="/objectives/" Icon="bi-arrow-return-left"/>
+</div>
+<div class="row">
+     <FormComponentObjectives ButtonText="Update" OnValidSubmit="@EditObjective" objective="objective" CancelLink="/objectives" />
+</div>
 
-<h3>Edit value</h3>
 
-<FormComponentObjective ButtonText="Update" OnValidSubmit="@EditValue" objective="objective" />
 
 
 
@@ -18,9 +25,16 @@
         objective = await _client.GetFromJsonAsync<Objective>($"/api/Objectives/{id}");
     }
 
-    async Task EditValue()
+    async Task EditObjective()
     {
         await _client.PutAsJsonAsync($"/api/Objectives/{id}", objective);
         _navManager.NavigateTo("/objectives");
     }
+
+    public Dictionary<string, string> breadcrumbLink { get; set; } =
+    new Dictionary<string, string>()
+            {
+                { "Home", "/" },
+                { "Objectives", "/objectives" }
+            };
 }

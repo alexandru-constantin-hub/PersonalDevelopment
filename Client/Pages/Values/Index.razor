@@ -11,16 +11,16 @@
 }
 else
 {
-    
-    
+
+
     <div class="row">
         <div class="col-10">
             <Breadcrumb BreadcrumbElements=@breadcrumbLink ActivePage="Values list" Title="Your values" />
         </div>
-        <Bookmark Link="/values/create" Icon="bi-plus-square"/>
+        <Bookmark Link="/values/create" Icon="bi-plus-square" />
     </div>
-    
-    
+
+
 
     <div class="row row-cols-1 row-cols-md-2 g-4">
         @foreach (var value in Model)
@@ -37,19 +37,18 @@ else
                     <div class="card-body @((value.ImageLink !=null)? "px-3" : "px-4") py-3 h-100">
                         <div class="value-card-content h-100">
                             <h5 class="card-title pb-2">@value.Name</h5>
-                           @* <CardActions LinkPath="/values/edit/" LinkEdit="@value.Id" OnClickFunction="Delete(value.Id)"/>*@
                             <div class="setting-list">
-                                <ul class="list-unstyled setting-option list-group list-group-horizontal" style="width:@(Open? 60: 10)px">
-                                    <li>
-                                        <div class="setting-primary">
-                                            <i class="bi bi-three-dots-vertical" @onclick="Toggle"></i>
-                                        </div>
-                                    </li>
-                                    <li><a href="/values/edit/@value.Id"><i class="bi bi-pencil-square"></i></a></li>
-                                    <li><a type="button" @onclick="(()=>Delete(value.Id))" class="px-1"><i class="bi bi-x-square"></i></a></li>
-                                </ul>
+                                <div class="btn-group dropstart">
+                                    <button type="button" class="btn btn-outline-primary btn-sm border-0" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-three-dots-vertical"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/values/edit/@value.Id">Edit this value</a></li>
+                                        <li><a class="dropdown-item" type="button" @onclick="(()=>Delete(value.Id))">Delete this value</a></li>
+                                    </ul>
+                                </div>
                             </div>
-                            <p class="card-text overflow-auto pb-2">@value.Description</p>
+                            <p class="card-text overflow-auto pb-2 text-muted">@value.Description</p>
 
                         </div>
 
@@ -80,17 +79,11 @@ else
         }
 
     }
-
-    public bool Open { get; set; } = false;
-    public void Toggle()
-    {
-        Open = !Open;
-    }
-
+    
     public Dictionary<string, string> breadcrumbLink { get; set; } =
     new Dictionary<string, string>()
-            {
+    {
                 { "Home", "/" }
-            };
+    };
 
 }

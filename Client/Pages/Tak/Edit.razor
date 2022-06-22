@@ -3,9 +3,15 @@
 @inject NavigationManager _navManager
 
 
-<h3>Edit value</h3>
-
-<FormComponentTask ButtonText="Update" OnValidSubmit="@EditTak" tak="tak" />
+<div class="row">
+    <div class="col-10">
+        <Breadcrumb BreadcrumbElements=@breadcrumbLink ActivePage="Edit your task" Title="Edit your task" />
+    </div>
+    <Bookmark Link="/tasks" Icon="bi-arrow-return-left"/>
+</div>
+<div class="row">
+    <FormComponentTask ButtonText="Update" OnValidSubmit="@EditTak" tak="tak" CancelLink="/tasks"/>
+</div>
 
 
 
@@ -23,4 +29,11 @@
         await _client.PutAsJsonAsync($"/api/Taks/{id}", tak);
         _navManager.NavigateTo("/tasks");
     }
+    
+    public Dictionary<string, string> breadcrumbLink { get; set; } =
+    new Dictionary<string, string>()
+     {
+                { "Home", "/" },
+                { "Tasks", "/tasks" }
+     };
 }

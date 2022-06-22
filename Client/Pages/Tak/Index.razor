@@ -4,39 +4,127 @@
 @inject IJSRuntime js
 @attribute [Authorize]
 
-<h3>Tasks</h3>
-
 @if (Model == null)
 {
-    <div class="alert alert-info" role="alert">
-        Loading values...
-    </div>
-} else
+    <Loading />
+}
+else
 {
-    <a href="/tasks/create" class="btn btn-secondary">Create new task</a>
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>CompletedProcentage</th>
-            <th>Status</th>
-        </tr>
-        @foreach (var tak in Model)
-        {
-            <tr>
-                <td>@tak.Name</td>
-                <td>@tak.Description</td>
-                <td>@tak.CompletedProcentage</td>
-                <td>@tak.Status</td>
-                <td>
-                    <a href="/tasks/view/@tak.Id" class="btn btn-primary">Detail</a>
-                    <a href="/tasks/edit/@tak.Id" class="btn btn-primary">Edit</a>
-                    <button class="btn btn-danger" @onclick="(()=>Delete(tak.Id))"></button>
-                </td>
-            </tr>
+    <div class="row">
+        <div class="col-10">
+            <Breadcrumb BreadcrumbElements=@breadcrumbLink ActivePage="Tasks list" Title="Your tasks" />
+        </div>
+        <Bookmark Link="/tasks/create" Icon="bi-plus-square" />
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="bg-light p-4">
+                                <h5 class="pb-2">Important and Urgent</h5>
+                                @foreach (var value in Model)
+                                {
+                                    @if (value.Category == "IU")
+                                    {
+                                        <CardComponent tak=value ExternalMethod="@Delete" />
+                                    }
+                                }
+                            </div>                          
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="bg-light p-4">
+                                <h5 class="pb-2">Important and Not Urgent</h5>
+                                @foreach (var value in Model)
+                                {
+                                    @if (value.Category == "INU")
+                                    {
+                                        <CardComponent tak=value ExternalMethod="@Delete" />
+                                    }
+                                }
+                            </div>    
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="bg-light p-4">
+                                <h5 class="pb-2">Not Important and Urgent</h5>
+                                @foreach (var value in Model)
+                                {
+                                    @if (value.Category == "NIU")
+                                    {
+                                        <CardComponent tak=value ExternalMethod="@Delete" />
+                                    }
+                                }
+                            </div>  
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="bg-light p-4">
+                                <h5 class="pb-2">Not Important and Not Urgent</h5>
+                                @foreach (var value in Model)
+                                {
+                                    @if (value.Category == "NINU")
+                                    {
+                                        <CardComponent tak=value ExternalMethod="@Delete" />
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="bg-light p-4">
+                                <h5 class="pb-2">Tasks without a category</h5>
+                                 @foreach (var value in Model)
+                                    {
+                                        @if (value.Category != "NINU" && value.Category != "INU" && value.Category != "NIU" && value.Category != "IU")
+                                        {
+                                            <CardComponent tak=value ExternalMethod="@Delete" />
+                                        }
+
+                                    }
+                            </div>   
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
             
-        }
-    </table>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="bg-light p-4">
+                                <h5 class="pb-2">Tasks completed</h5>
+                                 @foreach (var value in Model)
+                                    {
+                                        @if (value.Category != "NINU" && value.Category != "INU" && value.Category != "NIU" && value.Category != "IU")
+                                        {
+                                            <CardComponent tak=value ExternalMethod="@Delete" />
+                                        }
+
+                                    }
+                            </div>   
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+
 }
 
 @code {
@@ -56,8 +144,13 @@
             await _client.DeleteAsync("/api/taks/" + takId);
             await OnInitializedAsync();
         }
-        
+
     }
 
+    public Dictionary<string, string> breadcrumbLink { get; set; } =
+    new Dictionary<string, string>()
+                        {
+       { "Home", "/" }
+                        };
+
 }
-    

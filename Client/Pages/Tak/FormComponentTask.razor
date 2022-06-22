@@ -1,45 +1,68 @@
-﻿<EditForm Model="@tak" OnValidSubmit="@OnValidSubmit">
-    <DataAnnotationsValidator />
-    <div class="form-group">
-        <label>
-            Name:
-            <InputText @bind-Value="tak.Name"/>
-        </label>
-    </div>
-    <div class="form-group">
-        <label>
-            Description:
-             <InputText @bind-Value="tak.Description"/>
-        </label> 
-    </div>
-    <div class="form-group">
-        <label>
-            Complete procentage:
-             <InputNumber @bind-Value="tak.CompletedProcentage"/>
-        </label> 
-    </div>
-    <div class="form-group">
-        <label>
-            Status:
-            <InputSelect @bind-Value="@tak.Status"> 
-            <option value="IU">Important / Urgent</option>
-            <option value="INU">Important / Non Urgent</option>
-            <option value="NIU">Non Important / Urgent</option>
-            <option value="NINU">Non Important / Non Urgent</option>
-         </InputSelect>
-        </label>
-        
-    </div>
-   
-    <button type="submit" class="btn btn-success btn-block">
-        @ButtonText
-    </button>
-    
-</EditForm>
+﻿@inject NavigationManager _nav;
+
+<div class="card">
+    <EditForm Model="@tak" OnValidSubmit="@OnValidSubmit" class="theme-form">
+        <div class="card-body">
+            <DataAnnotationsValidator />
+            <div class="form-group mb-3">
+                <label for="takName" class="col-form-label pt-o">Task Name </label>
+                <InputText @bind-Value="@tak.Name" class="form-control" id="taskName" />
+                
+            </div>
+            <div class="form-group mb-3">
+                <label for="taskDescription" class="col-form-label pt-o">Description</label>
+                <InputText @bind-Value="tak.Description" class="form-control" id="taskDescription" />
+            </div>
+            <div class="form-group mb-3">
+                <label for="taskStartDate" class="col-form-label pt-o">Start date and time</label>
+                <input @bind="tak.StartDate" type="datetime-local" class="form-control" id="taskStartDate" />
+            </div>
+            <div class="form-group mb-3">
+                <label for="taskTimeLimit" class="col-form-label pt-o">Deadline</label>
+                <input @bind="tak.TimeLimit"type="datetime-local" class="form-control" id="taskTimeLimit" />
+            </div>
+            <div class="form-group mb-3">
+                <label for="taskCompletedProcentage" class="col-form-label pt-o">CompletedProcentage</label>
+                <InputNumber @bind-Value="tak.CompletedProcentage" class="form-control" id="taskCompletedProcentage" />
+            </div>
+            <div class="form-group mb-3">
+                <label class="col-form-label">Status</label>
+                    <InputSelect @bind-Value="@tak.Status" class="form-select">
+                        <option value="">Select</option>
+                        <option value="s">Not started</option>
+                        <option value="i">In progress</option>
+                        <option value="f">Finished</option>
+                    </InputSelect>
+            </div>
+            <div class="form-group mb-3">
+                <label class="col-form-label">Category</label>
+                    <InputSelect @bind-Value="@tak.Category" class="form-select">
+                        <option value="">Select</option>
+                        <option value="IU">Important / Urgent</option>
+                        <option value="INU">Important / Non Urgent</option>
+                        <option value="NIU">Non Important / Urgent</option>
+                        <option value="NINU">Non Important / Non Urgent</option>
+                    </InputSelect>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary mt-3">
+                @ButtonText
+            </button>
+            <button class="btn btn-secondary mt-3" @onclick="@(()=>_nav.NavigateTo(CancelLink))">
+                Cancel
+            </button>
+        </div>
+
+    </EditForm>
+
+</div>
+
 
 @code {
     [Parameter] public Tak tak { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public string CancelLink { get; set; } = "/tasks";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
-
 }

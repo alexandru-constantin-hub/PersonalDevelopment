@@ -1,11 +1,6 @@
 ﻿@inject NavigationManager _nav;
 
-<div class="card">
-    <div class="card-header pb-0">
-        <h5>Record a new objective</h5>
-        <span>An object help you to stay focus on what is important in your life</span>
-    </div>
-    
+<div class="card">  
         <EditForm Model="@objective" OnValidSubmit="@OnValidSubmit" class="theme-form">
             <div class="card-body">
             <DataAnnotationsValidator />

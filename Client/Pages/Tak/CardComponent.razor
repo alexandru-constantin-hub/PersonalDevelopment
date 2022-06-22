@@ -1,0 +1,65 @@
+﻿<div class="card p-0 mt-3">
+
+    <div class="card-body pt-3 pb-1 h-100">
+        <div class="d-flex justify-content-between">
+
+            <h5 class="card-title pb-2 me-2">@tak.Name</h5>
+
+
+            <div class="btn-group dropstart">
+                <button type="button" class="btn btn-outline-primary btn-sm max-height-30" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-three-dots-vertical"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/tasks/edit/@tak.Id">Edit this task</a></li>
+                    <li><a class="dropdown-item" type="button" @onclick="(args)=>EMethod(args, tak.Id)">Delete this task</a></li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="d-flex justify-content-between">
+
+            <p class="text-muted pe-2">@tak.Description</p>
+
+            <div>
+
+                @if (@tak.Status == "s")
+                {
+                    <span class="badge bg-warning">Not started</span>
+                }
+                @if (@tak.Status == "i")
+                {
+                    <span class="badge bg-secondary">In progress</span>
+                }
+                @if (@tak.Status == "f")
+                {
+                    <span class="badge bg-primary">Finished</span>
+                }
+            </div>
+        </div>
+        <div class="d-flex justify-content-between text-muted">
+            @if(tak.StartDate != null && tak.TimeLimit != null)
+            {
+            <p><span><i class="bi bi-calendar2-date"></i> @tak.StartDate?.ToString("MM-dd-yyyy")</span><span class="ms-2"><i class="bi bi-clock"></i> '@tak.StartDate?.ToString("HH:mm")'</span></p>
+            <p><span><i class="bi bi-calendar2-date"></i> @tak.TimeLimit?.ToString("MM-dd-yyyy")</span><span class="ms-2"><i class="bi bi-clock"></i> @tak.TimeLimit?.ToString("HH:mm")</span></p>
+            }
+        </div>
+        <div>
+            @if(tak.CompletedProcentage != null)
+            {
+                <input type="range" class="form-range" min="0" max="100" id="customRange2" value="@tak.CompletedProcentage" disabled>
+            }
+            
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public Tak tak { get; set; }
+    [Parameter] public EventCallback<int> ExternalMethod { get; set; }
+
+    private async Task EMethod(MouseEventArgs e, int id)
+    {
+        await ExternalMethod.InvokeAsync(id);
+    }
+}

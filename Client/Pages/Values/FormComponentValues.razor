@@ -1,11 +1,6 @@
 ﻿@inject NavigationManager _nav;
 
-<div class="card">
-    <div class="card-header pb-0">
-        <h5>Record a new value</h5>
-        <span>Did you discover a new value in yourself? Excellent, write it down do not forget it</span>
-    </div>
-    
+<div class="card"> 
         <EditForm Model="@value" OnValidSubmit="@OnValidSubmit" class="theme-form">
             <div class="card-body">
             <DataAnnotationsValidator />

@@ -13,21 +13,11 @@
 
 .setting-list {
     position: absolute;
-    right: 20px;
-    top: 22px;
+    right: 10px;
+    top: 14px;
     display: inline-block;
     z-index: 1;
     background-color: $white;
-
-    .setting-option {
-        overflow: hidden;
-        transition: 0.3s ease-in-out;
-        text-align: right;
-    }
-    
-    i {
-        cursor: pointer;
-    }
 }
 
 //Buttons in header of page
@@ -66,4 +56,8 @@
             }
         }
     }
+}
+
+.max-height-30 {
+    max-height: 30px;
 }

@@ -35,17 +35,28 @@ else
                         <div class="value-card-content d-flex flex-column h-100">
                             <h5 class="card-title pb-2">@value.Name</h5>
                             <div class="setting-list">
-                                <ul class="list-unstyled setting-option list-group list-group-horizontal" style="width:@(Open? 60: 10)px">
-                                    <li>
-                                        <div class="setting-primary">
-                                            <i class="bi bi-three-dots-vertical" @onclick="Toggle"></i>
-                                        </div>
-                                    </li>
-                                    <li><a href="/values/edit/@value.Id"><i class="bi bi-pencil-square"></i></a></li>
-                                    <li><a type="button" @onclick="(()=>Delete(value.Id))" class="px-1"><i class="bi bi-x-square"></i></a></li>
-                                </ul>
+                                <div class="btn-group dropstart">
+                                    <button type="button" class="btn btn-outline-primary btn-sm border-0" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-three-dots-vertical"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/objectives/edit/@value.Id">Edit this objective</a></li>
+                                        <li><a class="dropdown-item" type="button" @onclick="(()=>Delete(value.Id))">Delete this objective</a></li>
+                                    </ul>
+                                </div>
                             </div>
-                            <p class="card-text overflow-auto pb-2">@value.Description</p>
+                            <div class="card-text overflow-auto pb-2">
+                                <p class="text-muted">@value.Description</p>
+                                <label class="form-label">Deadline</label>
+                                @if(@value.TimeLimit == null) {
+                                    <p>No deadline</p>
+                                }
+                                <p>@value.TimeLimit?.ToString("MM/dd/yyyy")</p> 
+                                <label for="customRange2" class="form-label">Complete procentage</label>
+                                <input type="range" class="form-range" min="0" max="100" id="customRange2" value="@value.CompletedProcentage" disabled>
+                                <output id="num"></output>
+                            </div>
+                            
 
                             <p class="mt-auto">
                                 <button class="btn btn-outline-primary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@value.Id" aria-expanded="false" aria-controls="collapse-@value.Id">
@@ -138,16 +149,10 @@ else
 
     }
 
-    public bool Open { get; set; } = false;
-    public void Toggle()
-    {
-        Open = !Open;
-    }
-
     public Dictionary<string, string> breadcrumbLink { get; set; } =
     new Dictionary<string, string>()
-                            {
-                { "Home", "/" }
-                            };
+      {
+         { "Home", "/" }
+      };
 
 }
