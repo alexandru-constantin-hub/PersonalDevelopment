@@ -1,0 +1,27 @@
+﻿@inject HttpClient _client
+
+<button @onclick="(()=>DisplayConnectedData(objectiveId))">Show </button>
+<ul>
+    @if (listFetched != null)
+    {
+        @foreach (var objective in listFetched)
+        {
+            <li>@objective?.Tak.Name</li>
+        }
+    }
+
+</ul>
+
+@code {
+    [Parameter] public int objectiveId { get; set; }
+    private List<ValueObjectiveTak> listFetched { get; set; }
+
+
+
+    async Task DisplayConnectedData(int objectiveId)
+    {
+        Console.WriteLine(objectiveId + " Type of" + objectiveId.GetType());
+        listFetched = await _client.GetFromJsonAsync<List<ValueObjectiveTak>>("/api/ValueObjectiveTaks/Objective/" + objectiveId);
+        await OnInitializedAsync();
+    }
+}

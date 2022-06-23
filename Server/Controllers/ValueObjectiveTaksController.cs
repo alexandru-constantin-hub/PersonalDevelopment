@@ -28,8 +28,21 @@ namespace PersonalDevelopment.Server.Controllers
           if (_context.ValueObjectiveTaks == null)
           {
               return NotFound();
-          }
+          }  
             return await _context.ValueObjectiveTaks.Include(v=>v.Value).Include(o=>o.Objective).Include(t=>t.Tak).ToListAsync();
+        }
+
+        // GET: api/ValueObjectiveTaks/Objective/Id
+        [HttpGet("Objective/{id:int}")]
+        public async Task<ActionResult<IEnumerable<ValueObjectiveTak>>> GetObjective(int id)
+        {
+            Console.WriteLine(id);
+            if (_context.ValueObjectiveTaks == null)
+            {
+                return NotFound();
+            }
+            return  await _context.ValueObjectiveTaks.Where(x => x.ObjectiveID == id).Include(v => v.Value).Include(o => o.Objective).Include(t => t.Tak).ToListAsync();
+            
         }
 
         // GET: api/ValueObjectiveTaks/5
@@ -49,6 +62,8 @@ namespace PersonalDevelopment.Server.Controllers
 
             return valueObjectiveTak;
         }
+
+        
 
         // PUT: api/ValueObjectiveTaks/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

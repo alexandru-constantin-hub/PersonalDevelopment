@@ -1,24 +1,38 @@
 ﻿@inherits LayoutComponentBase
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+    @*<div class="sidebar">
+    <NavMenu />
+    </div>*@
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Personal Development</a>
+            <button class="" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" >
+                
+                <span class="ms-auto navbar-text">
+                    <LoginDisplay />
+                </span>
+            </div>
+        </div>
+        
+    </nav>
+    <div class="main-menu" id="navbarText">
+            Exemple
+        </div>
 
     <main>
-        <div class="top-row px-4 auth">
-            <LoginDisplay />
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
 
         <article class="container mb-5">
             @Body
         </article>
     </main>
 </div>
-<MudThemeProvider/>
-<MudDialogProvider/>
-<MudSnackbarProvider/>
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
 @*<MudLayout>
     <MudMainContent>
         @Body
