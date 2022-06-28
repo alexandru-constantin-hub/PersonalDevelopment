@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PersonalDevelopment.Server.Data;
 
@@ -11,9 +12,10 @@ using PersonalDevelopment.Server.Data;
 namespace PersonalDevelopment.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220628021557_DeleteValueObjectiveTask")]
+    partial class DeleteValueObjectiveTask
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -412,32 +414,6 @@ namespace PersonalDevelopment.Server.Data.Migrations
                     b.ToTable("Objectives");
                 });
 
-            modelBuilder.Entity("PersonalDevelopment.Shared.Models.ObjectiveTak", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<int?>("ObjectiveID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TakID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("ObjectiveID");
-
-                    b.HasIndex("TakID");
-
-                    b.ToTable("ObjectiveTaks");
-                });
-
             modelBuilder.Entity("PersonalDevelopment.Shared.Models.Tak", b =>
                 {
                     b.Property<int>("Id")
@@ -502,32 +478,6 @@ namespace PersonalDevelopment.Server.Data.Migrations
                     b.ToTable("Value");
                 });
 
-            modelBuilder.Entity("PersonalDevelopment.Shared.Models.ValueObjective", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<int?>("ObjectiveID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ValueID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("ObjectiveID");
-
-                    b.HasIndex("ValueID");
-
-                    b.ToTable("ValueObjective");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -577,36 +527,6 @@ namespace PersonalDevelopment.Server.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("PersonalDevelopment.Shared.Models.ObjectiveTak", b =>
-                {
-                    b.HasOne("PersonalDevelopment.Shared.Models.Objective", "Objective")
-                        .WithMany()
-                        .HasForeignKey("ObjectiveID");
-
-                    b.HasOne("PersonalDevelopment.Shared.Models.Tak", "Tak")
-                        .WithMany()
-                        .HasForeignKey("TakID");
-
-                    b.Navigation("Objective");
-
-                    b.Navigation("Tak");
-                });
-
-            modelBuilder.Entity("PersonalDevelopment.Shared.Models.ValueObjective", b =>
-                {
-                    b.HasOne("PersonalDevelopment.Shared.Models.Objective", "Objective")
-                        .WithMany()
-                        .HasForeignKey("ObjectiveID");
-
-                    b.HasOne("PersonalDevelopment.Shared.Models.Value", "Value")
-                        .WithMany()
-                        .HasForeignKey("ValueID");
-
-                    b.Navigation("Objective");
-
-                    b.Navigation("Value");
                 });
 #pragma warning restore 612, 618
         }

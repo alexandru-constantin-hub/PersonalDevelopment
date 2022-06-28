@@ -20,7 +20,10 @@ namespace PersonalDevelopment.Server.Data
 
         public virtual DbSet<Tak> Taks { get; set; }
 
-        public virtual DbSet<ValueObjectiveTak> ValueObjectiveTaks { get; set;}
+        public virtual DbSet<ValueObjective> ValueObjective  { get; set; }
+
+        public virtual DbSet<ObjectiveTak> ObjectiveTaks { get; set; }
+
 
     }
 }
