@@ -9,7 +9,7 @@
     <div class="col-10">
         <Breadcrumb BreadcrumbElements=@breadcrumbLink Title="Create a new task" ActivePage="Create a new task"/>
     </div>
-    <Bookmark Link="/tasks/" Icon="bi-arrow-return-left"/>
+    <BookmarkBack />
 </div>
 <div class="row">
     <FormComponentTask ButtonText="Create a task" tak="tak" OnValidSubmit="@CreateTak" CancelLink="/tasks"/>

@@ -1,37 +1,120 @@
-﻿@page "/objectives/view/{id:int}"
+﻿@page "/objectives/{id:int}"
 @using Microsoft.AspNetCore.Authorization
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
 
-<h3>Objective</h3>
-
 @if (objective == null)
 {
-    <div class="alert alert-info" role="alert">
-        Loading values...
-    </div>
-} else
+    <Loading />
+}
+else
 {
-    <table>
-        <tr>
-            <th>Name</th>
-        </tr>
-        
-        
-            <tr>
-                <td>@objective.Name</td>
-                <td>@objective.Description</td>
-                <td>@objective.CompletedProcentage</td>
-                <td>
-                    <a href="/objectives/view/@objective.Id" class="btn btn-primary">Detail</a>
-                    <a href="/objectives/edit/@objective.Id" class="btn btn-primary">Edit</a>
-                    <button class="btn btn-danger" @onclick="(()=>Delete())"></button>
-                </td>
-            </tr>
-            
-        
-    </table>
+    <div class="row">
+        <div class="col-10">
+            <Breadcrumb BreadcrumbElements=@breadcrumbLink ActivePage="Your objective" Title="Your objective" />
+        </div>
+        <BookmarkBack />
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+            <div class="col">
+                <div class="card h-100 d-flex flex-row p-0 card-values">
+
+                    @if (objective.ImageLink != null)
+                    {
+                        <div class="card-value-image" style="background-image: url('@objective.ImageLink');"></div>
+                    }
+
+
+                    <div class="card-body @((objective.ImageLink !=null)? "px-3" : "px-4") py-3 h-100">
+                        <div class="value-card-content d-flex flex-column h-100">
+                            <h5 class="card-title pb-2">@objective.Name</h5>
+                            <div class="setting-list">
+                                <div class="btn-group dropstart">
+                                    <button type="button" class="btn btn-outline-primary btn-sm max-height-30" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-three-dots-vertical"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/objectives/edit/@objective.Id">Edit this objective</a></li>
+                                        <li><a class="dropdown-item" type="button" @onclick="(()=>Delete())">Delete this objective</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-text overflow-auto pb-2">
+                                <p class="text-muted">@objective.Description</p>
+                                <label class="form-label">Deadline</label>
+                                @if(@objective.TimeLimit == null) {
+                                    <p>No deadline</p>
+                                }
+                                <p>@objective.TimeLimit?.ToString("MM/dd/yyyy")</p> 
+                                <label for="customRange2" class="form-label">Complete procentage</label>
+                                <input type="range" class="form-range" min="0" max="100" id="customRange2" value="@objective.CompletedProcentage" disabled>
+                                <output id="num"></output>
+                            </div>
+                            
+
+                            <p class="mt-auto">
+                                <button class="btn btn-outline-primary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@objective.Id" aria-expanded="false" aria-controls="collapse-@objective.Id">
+                                    SMART?
+                                </button>
+                            </p>
+                            <div class="collapse" id="collapse-@objective.Id">
+                                <div class="card card-body">
+                                    <div class="form-check form-switch">
+                                        @if (objective.Specific == true) {
+                                            <input class="form-check-input" type="checkbox" id="checkbox-Specific-@objective.Id" checked>
+                                        } else
+                                        {
+                                            <input class="form-check-input" type="checkbox" id="checkbox-Specific-@objective.Id">
+                                        }
+                                        <label class="form-check-label" for="checkbox-Specific-@objective.Id">Specific</label>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        @if (objective.Measurable == true) {
+                                            <input class="form-check-input" type="checkbox" id="checkbox-Measurable-@objective.Id" checked>
+                                        } else
+                                        {
+                                            <input class="form-check-input" type="checkbox" id="checkbox-Measurable-@objective.Id">
+                                        }
+                                        <label class="form-check-label" for="checkbox-Measurable-@objective.Id">Measurable</label>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        @if (objective.Relevant == true) {
+                                            <input class="form-check-input" type="checkbox" id="checkbox-Relevant-@objective.Id" checked>
+                                        } else
+                                        {
+                                            <input class="form-check-input" type="checkbox" id="checkbox-Relevant-@objective.Id">
+                                        }
+                                        <label class="form-check-label" for="checkbox-Relevant-@objective.Id">Relevant</label>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        @if (objective.Achievable == true) {
+                                            <input class="form-check-input" type="checkbox" id="checkbox-Achievable-@objective.Id" checked>
+                                        } else
+                                        {
+                                            <input class="form-check-input" type="checkbox" id="checkbox-Achievable-@objective.Id">
+                                        }
+                                        <label class="form-check-label" for="checkbox-Achievable-@objective.Id">Achievable</label>
+                                    </div>
+                                     <div class="form-check form-switch">
+                                        @if (objective.Time == true) {
+                                            <input class="form-check-input" type="checkbox" id="checkbox-Time-@objective.Id" checked>
+                                        } else
+                                        {
+                                            <input class="form-check-input" type="checkbox" id="checkbox-Time-@objective.Id">
+                                        }
+                                        <label class="form-check-label" for="checkbox-Time-@objective.Id">Time</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+    </div>
 }
 
 @code {
@@ -45,15 +128,24 @@
 
     async Task Delete()
     {
-        
+
         var confirm = await js.InvokeAsync<bool>("confirm", "Do you want to delete " + objective.Name);
         if (confirm)
         {
             await _client.DeleteAsync("/api/objetives/" + objective.Id);
             await OnInitializedAsync();
         }
-        
+
     }
 
-    
+    public Dictionary<string, string> breadcrumbLink { get; set; } =
+    new Dictionary<string, string>()
+             {
+           { "Home", "/" },
+           { "Objectives", "/objectives" }
+             };
+
+   
+
+
 }

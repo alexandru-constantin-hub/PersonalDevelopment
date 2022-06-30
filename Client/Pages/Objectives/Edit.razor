@@ -6,7 +6,7 @@
     <div class="col-10">
         <Breadcrumb BreadcrumbElements=@breadcrumbLink ActivePage="Edit your objective" Title="Edit your objective" />
     </div>
-    <Bookmark Link="/objectives/" Icon="bi-arrow-return-left"/>
+    <BookmarkBack />
 </div>
 <div class="row">
      <FormComponentObjectives ButtonText="Update" OnValidSubmit="@EditObjective" objective="objective" CancelLink="/objectives" />

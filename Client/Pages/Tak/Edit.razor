@@ -7,7 +7,7 @@
     <div class="col-10">
         <Breadcrumb BreadcrumbElements=@breadcrumbLink ActivePage="Edit your task" Title="Edit your task" />
     </div>
-    <Bookmark Link="/tasks" Icon="bi-arrow-return-left"/>
+   <BookmarkBack />
 </div>
 <div class="row">
     <FormComponentTask ButtonText="Update" OnValidSubmit="@EditTak" tak="tak" CancelLink="/tasks"/>

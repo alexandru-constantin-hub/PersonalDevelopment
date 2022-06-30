@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +30,7 @@ namespace PersonalDevelopment.Server.Controllers
           {
               return NotFound();
           }
-            return await _context.ObjectiveTaks.ToListAsync();
+            return await _context.ObjectiveTaks.Where(a => a.UserId == HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)).Include(t => t.Tak).Include(o=>o.Objective).ToListAsync();
         }
 
         // GET: api/ObjectiveTaks/5

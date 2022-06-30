@@ -11154,6 +11154,15 @@ textarea.form-control-lg {
   background-color: #fff;
 }
 
+.show-connections {
+  position: absolute;
+  right: 10px;
+  bottom: 14px;
+  display: inline-block;
+  z-index: 1;
+  background-color: #fff;
+}
+
 .bookmark {
   text-align: right;
 }
@@ -11185,6 +11194,33 @@ textarea.form-control-lg {
   margin: auto;
   padding-top: 8px;
   color: #24695c;
+}
+
+ul.connections-list {
+  counter-reset: index;
+  padding: 0;
+  max-width: 300px;
+}
+ul.connections-list li.connections-item {
+  counter-increment: index;
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+ul.connections-list li.connections-item::before {
+  content: counters(index, ".", decimal-leading-zero);
+  text-align: right;
+  font-weight: bold;
+  color: #ba895d;
+  padding-right: 1rem;
+  font-variant-numeric: tabular-nums;
+  align-self: flex-start;
+  /*background-image: linear-gradient(to bottom, aquamarine, orangered);
+  background-attachment: fixed;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;*/
 }
 
 .max-height-30 {

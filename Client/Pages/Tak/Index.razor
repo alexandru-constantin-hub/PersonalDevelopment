@@ -28,7 +28,7 @@ else
                                 {
                                     @if (value.Category == "IU")
                                     {
-                                        <CardComponent tak=value ExternalMethod="@Delete" />
+                                        <CardComponent tak=value ExternalMethod="@Delete" ObjectiveTaks=ObjectiveTaks/>
                                     }
                                 }
                             </div>                          
@@ -40,7 +40,7 @@ else
                                 {
                                     @if (value.Category == "INU")
                                     {
-                                        <CardComponent tak=value ExternalMethod="@Delete" />
+                                        <CardComponent tak=value ExternalMethod="@Delete" ObjectiveTaks=ObjectiveTaks />
                                     }
                                 }
                             </div>    
@@ -52,7 +52,7 @@ else
                                 {
                                     @if (value.Category == "NIU")
                                     {
-                                        <CardComponent tak=value ExternalMethod="@Delete" />
+                                        <CardComponent tak=value ExternalMethod="@Delete" ObjectiveTaks=ObjectiveTaks />
                                     }
                                 }
                             </div>  
@@ -64,7 +64,7 @@ else
                                 {
                                     @if (value.Category == "NINU")
                                     {
-                                        <CardComponent tak=value ExternalMethod="@Delete" />
+                                        <CardComponent tak=value ExternalMethod="@Delete" ObjectiveTaks=ObjectiveTaks />
                                     }
                                 }
                             </div>
@@ -86,7 +86,7 @@ else
                                     {
                                         @if (value.Category != "NINU" && value.Category != "INU" && value.Category != "NIU" && value.Category != "IU")
                                         {
-                                            <CardComponent tak=value ExternalMethod="@Delete" />
+                                            <CardComponent tak=value ExternalMethod="@Delete" ObjectiveTaks=ObjectiveTaks />
                                         }
 
                                     }
@@ -111,7 +111,7 @@ else
                                     {
                                         @if (value.Category != "NINU" && value.Category != "INU" && value.Category != "NIU" && value.Category != "IU")
                                         {
-                                            <CardComponent tak=value ExternalMethod="@Delete" ShowProcentage=false />
+                                            <CardComponent tak=value ExternalMethod="@Delete" ShowProcentage=false ObjectiveTaks=ObjectiveTaks />
                                         }
 
                                     }
@@ -129,10 +129,12 @@ else
 
 @code {
     private List<Tak> Model;
+    private List<ObjectiveTak> ObjectiveTaks;
 
     protected async override Task OnInitializedAsync()
     {
         Model = await _client.GetFromJsonAsync<List<Tak>>("/api/Taks");
+        ObjectiveTaks = await _client.GetFromJsonAsync<List<ObjectiveTak>>("/api/objectivetaks");
     }
 
     async Task Delete(int takId)

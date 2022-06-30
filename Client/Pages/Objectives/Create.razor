@@ -10,7 +10,7 @@
     <div class="col-10">
         <Breadcrumb BreadcrumbElements=@breadcrumbLink ActivePage="Create an objective" Title="Create an objective" />
     </div>
-    <Bookmark Link="/values/" Icon="bi-arrow-return-left"/>
+    <BookmarkBack />
 </div>
 <div class="row">
        <FormComponentObjectives ButtonText="Create" objective="objective" OnValidSubmit="@CreateObjective" CancelLink="/objectives" />

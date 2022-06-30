@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +30,7 @@ namespace PersonalDevelopment.Server.Controllers
           {
               return NotFound();
           }
-            return await _context.ValueObjective.ToListAsync();
+            return await _context.ValueObjective.Where(a => a.UserId == HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)).Include(o=>o.Objective).ToListAsync();
         }
 
         // GET: api/ValueObjectives/5
@@ -86,7 +87,8 @@ namespace PersonalDevelopment.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<ValueObjective>> PostValueObjective(ValueObjective valueObjective)
         {
-          if (_context.ValueObjective == null)
+            valueObjective.UserId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            if (_context.ValueObjective == null)
           {
               return Problem("Entity set 'ApplicationDbContext.ValueObjective'  is null.");
           }

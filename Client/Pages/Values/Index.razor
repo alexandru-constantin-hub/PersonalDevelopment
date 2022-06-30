@@ -50,6 +50,30 @@ else
                             </div>
                             <p class="card-text overflow-auto pb-2 text-muted">@value.Description</p>
 
+                            <div class="show-connections">
+                                <button class="btn btn-outline-primary btn-sm float-end" data-bs-toggle="collapse" href="#collapse-@value.Id" role="button" aria-expanded="false" aria-controls="#collapse-@value.Id">
+                                    <i class="bi bi-gear-wide-connected"></i>
+                                </button>
+                            </div>
+
+                            <div class="collapse" id="collapse-@value.Id">
+                                <div class="card card-body">
+                                    @if (ValueObjectives.Where(x=>x.ValueID == value.Id).Count() > 0)
+                                    {
+                                        <ul class="connections-list">
+                                            @foreach (var item in ValueObjectives.Where(x=>x.ValueID == value.Id))
+                                            {
+                                                <li class="connections-item"><a href="/objectives/@item.Objective?.Id">@item.Objective?.Name</a></li>
+                                            }
+                                        </ul>
+                                    }
+                                    else
+                                    {
+                                        <p>There is no objective connected to this value</p>
+                                    }
+                                </div>
+                            </div>
+
                         </div>
 
                     </div>
@@ -62,10 +86,12 @@ else
 }
 @code {
     private List<Value> Model;
+    private List<ValueObjective> ValueObjectives;
 
     protected async override Task OnInitializedAsync()
     {
         Model = await _client.GetFromJsonAsync<List<Value>>("/api/values");
+        ValueObjectives = await _client.GetFromJsonAsync<List<ValueObjective>>("/api/valueobjectives");
     }
 
     async Task Delete(int valueId)
@@ -79,11 +105,14 @@ else
         }
 
     }
-    
+
+
+
+
     public Dictionary<string, string> breadcrumbLink { get; set; } =
     new Dictionary<string, string>()
-    {
+                            {
                 { "Home", "/" }
-    };
+                            };
 
 }
