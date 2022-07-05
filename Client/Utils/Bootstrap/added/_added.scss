@@ -1,7 +1,12 @@
-﻿//title of the page
+﻿//entire page of the website
+
+
+
+
+//title of the page
 .page-header {
     padding-bottom: 1rem;
-    padding-top:1rem;
+    padding-top: 1rem;
 }
 
 //card for Values section
@@ -9,7 +14,37 @@
     min-height: 200px;
 }
 
-// more button in card
+//main menu
+nav {
+    z-index: 3;
+}
+.main-menu {
+        background-color: $white;
+        position: absolute;
+        top: 73px;
+        z-index: 3;
+        display: block;
+        width: 100%;
+        overflow: auto;
+        display: block;
+}
+
+//cover page on nav click
+.cover-page { 
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: $gray-800;
+        opacity:75%;
+        z-index: 1;
+}
+
+
+
+/*// more button in card
 
 .setting-list {
     position: absolute;
@@ -29,7 +64,7 @@
     display: inline-block;
     z-index: 1;
     background-color: $white;
-}
+}*/
 
 //Buttons in header of page
 .bookmark {
@@ -69,6 +104,10 @@
     }
 }
 
+.page-container {
+    min-height: calc(100vh - 160px);
+}
+
 
 //connections list
 
@@ -100,6 +139,30 @@ ul.connections-list {
         }
     }
 }
+
+//badge status in card
+.card-status {
+    margin-top: -8px;
+
+    span {
+        font-size: .5rem;
+    }
+}
+
+//footer
+
+.footer {
+    box-shadow: 0 0 20px 16px rgb(4 122 251 / 4%);
+    background-color: $white;
+
+    p {
+        margin-top: 1rem;
+        font: .8rem;
+        color: $gray-500;
+    }
+}
+
+
 
 .max-height-30 {
     max-height: 30px;

@@ -4,38 +4,81 @@
     @*<div class="sidebar">
     <NavMenu />
     </div>*@
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
-            <a class="navbar-brand" href="#">Personal Development</a>
-            <button class="" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <a class="navbar-brand" href="/dashboard"><img src="img/logo.svg" width="50px" class="pe-2">Personaldevelopment.space</a>
+            <button class="btn btn-outline-primary btn-sm border-0" type="button" @onclick="(()=>ToogleMenu())">
+                <span class="navbar-toggler-icon me-2 mb-1"></span>Menu
             </button>
-            <div class="collapse navbar-collapse" >
-                
+            <div class="collapse navbar-collapse">
+
                 <span class="ms-auto navbar-text">
                     <LoginDisplay />
                 </span>
             </div>
         </div>
-        
-    </nav>
-    <div class="main-menu" id="navbarText">
-            Exemple
-        </div>
+        @if (toogleMenu)
+        {
+            <div class="main-menu pt-3 pb-3" id="navbar">
+                <div class="container">
+                    <div class="row row-cols-1 row-cols-md-3 g-4">
+                        <div class="col">
+                            <div class="list-group">
+                            </div>
+                            <h6>Personal efficiency</h6>
+                            <div class="list-group list-group-flush">
+                                <a class="list-group-item list-group-item-action" href="/values" @onclick="(()=>ToogleMenu())">Values</a>
+                                <a class="list-group-item list-group-item-action" href="/objectives" @onclick="(()=>ToogleMenu())">Objectives</a>
+                                <a class="list-group-item list-group-item-action" href="/tasks" @onclick="(()=>ToogleMenu())">Tasks</a>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <h6>Stress management</h6>
+                            <div class="list-group list-group-flush">
+                                <a class="list-group-item list-group-item-action" href="#">Soon...</a>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <h6>Control of emotions</h6>
+                            <div class="list-group list-group-flush">
+                                <a class="list-group-item list-group-item-action" href="#">Soon...</a>
+                            </div>
+                        </div>
 
+                    </div>
+                </div>
+            </div>
+        }
+    </nav>
+    @if (toogleMenu)
+    {
+        <div class="cover-page" id="coverPage" @onmouseover="(()=>ToogleMenu())"></div>
+    }
     <main>
 
-        <article class="container mb-5">
+        <article class="container mb-5 page-container">
             @Body
         </article>
     </main>
+    <footer class="footer w-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>Copyright © Alexandru Constantin. All rights reserved.</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="float-end">Made with <i class="bi bi-heart"></i> by Alexandru Constantin.</p>
+                </div>
+            </div>
+
+        </div>
+    </footer>
 </div>
-<MudThemeProvider />
-<MudDialogProvider />
-<MudSnackbarProvider />
-@*<MudLayout>
-    <MudMainContent>
-        @Body
-    </MudMainContent>
-</MudLayout>
-*@
+@code {
+    public bool toogleMenu { get; set; } = false;
+
+    async Task ToogleMenu()
+    {
+        toogleMenu = !toogleMenu;
+    }
+}

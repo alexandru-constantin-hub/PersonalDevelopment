@@ -15,37 +15,38 @@
 // other navbar variations.
 
 .navbar {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap; // allow us to do the line break for collapsing content
-  align-items: center;
-  justify-content: space-between; // space out brand from logo
-  padding-top: $navbar-padding-y;
-  padding-right: $navbar-padding-x; // default: null
-  padding-bottom: $navbar-padding-y;
-  padding-left: $navbar-padding-x; // default: null
-  @include gradient-bg();
-
-  // Because flex properties aren't inherited, we need to redeclare these first
-  // few properties so that content nested within behave properly.
-  // The `flex-wrap` property is inherited to simplify the expanded navbars
-  %container-flex-properties {
+    position: relative;
     display: flex;
-    flex-wrap: inherit;
+    flex-wrap: wrap; // allow us to do the line break for collapsing content
     align-items: center;
-    justify-content: space-between;
-  }
-
-  > .container,
-  > .container-fluid {
-    @extend %container-flex-properties;
-  }
-
-  @each $breakpoint, $container-max-width in $container-max-widths {
-    > .container#{breakpoint-infix($breakpoint, $container-max-widths)} {
-      @extend %container-flex-properties;
+    justify-content: space-between; // space out brand from logo
+    padding-top: $navbar-padding-y;
+    padding-right: $navbar-padding-x; // default: null
+    padding-bottom: $navbar-padding-y;
+    padding-left: $navbar-padding-x; // default: null
+    background-color: $white; // change the background color to white
+    box-shadow: 0 0 20px rgb(25 124 207 / 8%);
+    @include gradient-bg();
+    // Because flex properties aren't inherited, we need to redeclare these first
+    // few properties so that content nested within behave properly.
+    // The `flex-wrap` property is inherited to simplify the expanded navbars
+    %container-flex-properties {
+        display: flex;
+        flex-wrap: inherit;
+        align-items: center;
+        justify-content: space-between;
     }
-  }
+
+    > .container,
+    > .container-fluid {
+        @extend %container-flex-properties;
+    }
+
+    @each $breakpoint, $container-max-width in $container-max-widths {
+        > .container#{breakpoint-infix($breakpoint, $container-max-widths)} {
+            @extend %container-flex-properties;
+        }
+    }
 }
 
 
@@ -128,6 +129,7 @@
 
   &:hover {
     text-decoration: none;
+    background-color: $blue-100;
   }
 
   &:focus {

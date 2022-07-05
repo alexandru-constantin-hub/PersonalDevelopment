@@ -1,0 +1,117 @@
+﻿@page "/dashboard"
+@using Microsoft.AspNetCore.Authorization
+@using PersonalDevelopment.Client.Shared.Components
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+@if (Model == null)
+{
+    <Loading />
+}
+else
+{
+
+
+    <div class="row">
+        <div class="col-10">
+            <Breadcrumb BreadcrumbElements=@breadcrumbLink ActivePage="Dashboard" Title="Dashboard" />
+        </div>
+    </div>
+
+
+
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        @foreach (var value in Model)
+        {
+            <div class="col">
+                <div class="card h-100 d-flex flex-row p-0 card-values">
+
+                    @if (value.ImageLink != null)
+                    {
+                        <div class="card-value-image" style="background-image: url('@value.ImageLink');"></div>
+                    }
+
+
+                    <div class="card-body @((value.ImageLink !=null)? "px-3" : "px-4") py-3 h-100">
+                        <div class="value-card-content h-100">
+                            <h5 class="card-title pb-2">@value.Name</h5>
+                            <div class="setting-list">
+                                <div class="btn-group dropstart">
+                                    <button type="button" class="btn btn-outline-primary btn-sm max-height-30" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-three-dots-vertical"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/values/edit/@value.Id">Edit this value</a></li>
+                                        <li><a class="dropdown-item" type="button" @onclick="(()=>Delete(value.Id))">Delete this value</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <p class="card-text overflow-auto pb-2 text-muted">@value.Description</p>
+
+                            <div class="show-connections">
+                                <button class="btn btn-outline-primary btn-sm float-end" data-bs-toggle="collapse" href="#collapse-@value.Id" role="button" aria-expanded="false" aria-controls="#collapse-@value.Id">
+                                    <i class="bi bi-gear-wide-connected"></i>
+                                </button>
+                            </div>
+
+                            <div class="collapse" id="collapse-@value.Id">
+                                <div class="card card-body">
+                                    @if (ValueObjectives.Where(x=>x.ValueID == value.Id).Count() > 0)
+                                    {
+                                        <ul class="connections-list">
+                                            @foreach (var item in ValueObjectives.Where(x=>x.ValueID == value.Id))
+                                            {
+                                                <li class="connections-item"><a href="/objectives/@item.Objective?.Id">@item.Objective?.Name</a></li>
+                                            }
+                                        </ul>
+                                    }
+                                    else
+                                    {
+                                        <p>There is no objective connected to this value</p>
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        }
+    </div>
+}
+@code {
+    private List<Value> Model;
+    private List<ValueObjective> ValueObjectives;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Model = await _client.GetFromJsonAsync<List<Value>>("/api/values");
+        ValueObjectives = await _client.GetFromJsonAsync<List<ValueObjective>>("/api/valueobjectives");
+    }
+
+    async Task Delete(int valueId)
+    {
+        var value = Model.First(q => q.Id == valueId);
+        var confirm = await js.InvokeAsync<bool>("confirm", "Do you want to delete " + value.Name);
+        if (confirm)
+        {
+            await _client.DeleteAsync("/api/values/" + valueId);
+            await OnInitializedAsync();
+        }
+
+    }
+
+
+
+
+    public Dictionary<string, string> breadcrumbLink { get; set; } =
+    new Dictionary<string, string>()
+                            {
+                { "Home", "/" }
+                            };
+
+}

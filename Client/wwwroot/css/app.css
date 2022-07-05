@@ -3936,6 +3936,8 @@ textarea.form-control-lg {
   justify-content: space-between;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+  background-color: #fff;
+  box-shadow: 0 0 20px rgba(25, 124, 207, 0.08);
 }
 .navbar > .container,
 .navbar > .container-fluid,
@@ -3999,6 +4001,7 @@ textarea.form-control-lg {
 }
 .navbar-toggler:hover {
   text-decoration: none;
+  background-color: #d3e1de;
 }
 .navbar-toggler:focus {
   text-decoration: none;
@@ -11145,24 +11148,54 @@ textarea.form-control-lg {
   min-height: 200px;
 }
 
-.setting-list {
-  position: absolute;
-  right: 10px;
-  top: 14px;
-  display: inline-block;
-  z-index: 1;
-  background-color: #fff;
+nav {
+  z-index: 3;
 }
+
+.main-menu {
+  background-color: #fff;
+  position: absolute;
+  top: 73px;
+  z-index: 3;
+  display: block;
+  width: 100%;
+  overflow: auto;
+  display: block;
+}
+
+.cover-page {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #343a40;
+  opacity: 75%;
+  z-index: 1;
+}
+
+/*// more button in card
+
+.setting-list {
+    position: absolute;
+    right: 10px;
+    top: 14px;
+    display: inline-block;
+    z-index: 1;
+    background-color: $white;
+}
+
+// Show connection in card
 
 .show-connections {
-  position: absolute;
-  right: 10px;
-  bottom: 14px;
-  display: inline-block;
-  z-index: 1;
-  background-color: #fff;
-}
-
+    position: absolute;
+    right: 10px;
+    bottom: 14px;
+    display: inline-block;
+    z-index: 1;
+    background-color: $white;
+}*/
 .bookmark {
   text-align: right;
 }
@@ -11196,6 +11229,10 @@ textarea.form-control-lg {
   color: #24695c;
 }
 
+.page-container {
+  min-height: calc(100vh - 160px);
+}
+
 ul.connections-list {
   counter-reset: index;
   padding: 0;
@@ -11221,6 +11258,23 @@ ul.connections-list li.connections-item::before {
   background-attachment: fixed;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;*/
+}
+
+.card-status {
+  margin-top: -8px;
+}
+.card-status span {
+  font-size: 0.5rem;
+}
+
+.footer {
+  box-shadow: 0 0 20px 16px rgba(4, 122, 251, 0.04);
+  background-color: #fff;
+}
+.footer p {
+  margin-top: 1rem;
+  font: 0.8rem;
+  color: #adb5bd;
 }
 
 .max-height-30 {

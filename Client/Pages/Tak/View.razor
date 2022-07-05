@@ -1,41 +1,41 @@
-﻿@page "/tasks/view/{id:int}"
+﻿@page "/tasks/{id:int}"
 @using Microsoft.AspNetCore.Authorization
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
 
-<h3>Task detail</h3>
-
 @if (tak == null)
 {
-    <div class="alert alert-info" role="alert">
-        Loading values...
-    </div>
-} else
-{
-    <table>
-        <tr>
-            <th>Name</th>
-        </tr>
-        
-        
-            <tr>
-                <td>@tak.Name</td>
-                <td>
-                    <a href="/tasks/edit/@tak.Id" class="btn btn-primary">Edit</a>
-                    <button class="btn btn-danger" @onclick="(()=>Delete())"></button>
-                </td>
-            </tr>    
-    </table>
+    <Loading />
 }
+else
+{
+     <div class="row">
+        <div class="col-10">
+            <Breadcrumb BreadcrumbElements=@breadcrumbLink ActivePage="Your task" Title="Your task" />
+        </div>
+        <BookmarkBack />
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        <div class="col">
+            <CardComponent tak=tak ExternalMethod="@Delete" ObjectiveTaks=ObjectiveTaks/>
+        </div>
+    </div>
+
+    
+}
+
 
 @code {
     [Parameter] public int id { get; set; }
     Tak tak = new Tak();
+    private List<ObjectiveTak> ObjectiveTaks;
 
     protected async override Task OnParametersSetAsync()
     {
         tak = await _client.GetFromJsonAsync<Tak>("/api/taks/" + id);
+        ObjectiveTaks = await _client.GetFromJsonAsync<List<ObjectiveTak>>("/api/objectivetaks");
     }
 
     async Task Delete()
@@ -49,6 +49,13 @@
         }
         
     }
+
+    public Dictionary<string, string> breadcrumbLink { get; set; } =
+    new Dictionary<string, string>()
+                         {
+           { "Home", "/" },
+           { "Tasks", "/tasks" }
+                         };
 
     
 }
