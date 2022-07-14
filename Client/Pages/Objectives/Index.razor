@@ -16,7 +16,7 @@ else
         <div class="col-10">
             <Breadcrumb BreadcrumbElements=@breadcrumbLink ActivePage="Your objectives" Title="Your objectives" />
         </div>
-        <BookmarkBack />
+        <Bookmark Link="/objectives/create" Icon="bi-plus-lg" />
     </div>
 
     <div class="row row-cols-1 row-cols-lg-2 g-4">
@@ -31,8 +31,8 @@ else
                     }
 
 
-                    <div class="card-body">
-                        <div class="value-card-content d-flex flex-column">
+                    <div class="card-body flex-column justify-content-between">
+                        <div class="value-card-content d-flex flex-column justify-content-between">
                             <h5 class="card-title pb-2">@value.Name</h5>
                             <div class="card-text overflow-auto">
                                 <p class="text-muted">@value.Description</p>

@@ -11,18 +11,16 @@
 }
 else
 {
-
-
     <div class="row">
         <div class="col-10">
             <Breadcrumb BreadcrumbElements=@breadcrumbLink ActivePage="Values list" Title="Your values" />
         </div>
-        <Bookmark Link="/values/create" Icon="bi-plus-square" />
+        <Bookmark Link="/values/create" Icon="bi-plus-lg" />
     </div>
 
 
 
-    <div class="row row-cols-1 row-cols-md-2 g-4">
+    <div class="row row-cols-1 row-cols-lg-2 g-4">
         @foreach (var value in Model)
         {
             <div class="col">
@@ -34,36 +32,35 @@ else
                     }
 
 
-                    <div class="card-body @((value.ImageLink !=null)? "px-3" : "px-4") py-3 h-100">
-                        <div class="value-card-content h-100">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <div class="value-card-content d-flex flex-column justify-content-between">
                             <h5 class="card-title pb-2">@value.Name</h5>
-                            <div class="setting-list">
-                                <div class="btn-group dropstart">
-                                    <button type="button" class="btn btn-outline-primary btn-sm max-height-30" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="bi bi-three-dots-vertical"></i>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="/values/edit/@value.Id">Edit this value</a></li>
-                                        <li><a class="dropdown-item" type="button" @onclick="(()=>Delete(value.Id))">Delete this value</a></li>
-                                    </ul>
-                                </div>
+                            <div class="card-text overflow-auto">
+                                <p class="text-muted">@value.Description</p>
                             </div>
-                            <p class="card-text overflow-auto pb-2 text-muted">@value.Description</p>
-
-                            <div class="show-connections">
-                                <button class="btn btn-outline-primary btn-sm float-end" data-bs-toggle="collapse" href="#collapse-@value.Id" role="button" aria-expanded="false" aria-controls="#collapse-@value.Id">
-                                    <i class="bi bi-gear-wide-connected"></i>
+                        </div>
+                        <div class="footer-card">
+                            <div class="d-flex">
+                                <button type="button" class="btn btn-outline-primary btn-sm me-2" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/objectives/edit/@value.Id">Edit this value</a></li>
+                                    <li><a class="dropdown-item" type="button" @onclick="(()=>Delete(value.Id))">Delete this value</a></li>
+                                </ul>
+                                <button class="btn btn-outline-primary btn-sm me-2" data-bs-toggle="collapse" href="#collapseC-@value.Id" role="button" aria-expanded="false" aria-controls="#collapseC-@value.Id">
+                                    Show objectives
                                 </button>
                             </div>
 
-                            <div class="collapse" id="collapse-@value.Id">
-                                <div class="card card-body">
-                                    @if (ValueObjectives.Where(x=>x.ValueID == value.Id).Count() > 0)
+                            <div class="collapse" id="collapseC-@value.Id">
+                                <div class="card card-body mt-2">
+                                    @if (ValueObjectives?.Where(x => x.ValueID == value.Id).Count() > 0)
                                     {
                                         <ul class="connections-list">
-                                            @foreach (var item in ValueObjectives.Where(x=>x.ValueID == value.Id))
+                                            @foreach (var item in ValueObjectives?.Where(x => x.ValueID == value.Id))
                                             {
-                                                <li class="connections-item"><a href="/objectives/@item.Objective?.Id">@item.Objective?.Name</a></li>
+                                                <li class="connections-item"><a href="/objectivess/@item.Objective?.Id">@item.Objective?.Name</a></li>
                                             }
                                         </ul>
                                     }
@@ -73,17 +70,14 @@ else
                                     }
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
-
-
             </div>
         }
     </div>
 }
+
 @code {
     private List<Value> Model;
     private List<ValueObjective> ValueObjectives;
@@ -111,8 +105,8 @@ else
 
     public Dictionary<string, string> breadcrumbLink { get; set; } =
     new Dictionary<string, string>()
-                            {
-                { "Home", "/" }
-                            };
+    {
+       { "Home", "/" }
+    };
 
 }

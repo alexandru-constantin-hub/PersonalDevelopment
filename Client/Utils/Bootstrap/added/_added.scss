@@ -1,7 +1,13 @@
-﻿//entire page of the website
+﻿//hide the error message
 
+#blazor-error-ui {
+    display: none !important
+}
 
-
+//page container for pushing the footer
+.page-container {
+    min-height: calc(100vh - 180px);
+}
 
 //title of the page
 .page-header {
@@ -17,6 +23,19 @@
 //main menu
 nav {
     z-index: 3;
+
+    .btn {
+        .navbar-toggler-icon {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        &:hover {
+            .navbar-toggler {
+                border-color: $white;
+            }
+        }
+    }
 }
 .main-menu {
         background-color: $white;
@@ -97,16 +116,14 @@ nav {
                     display: block;
                     margin: auto;
                     padding-top: 8px;
-                    color: $primary;
+                    color: $black;
                 }
             }
         }
     }
 }
 
-.page-container {
-    min-height: calc(100vh - 160px);
-}
+
 
 
 //connections list

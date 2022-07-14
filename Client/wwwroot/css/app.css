@@ -11139,6 +11139,14 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+#blazor-error-ui {
+  display: none !important;
+}
+
+.page-container {
+  min-height: calc(100vh - 180px);
+}
+
 .page-header {
   padding-bottom: 1rem;
   padding-top: 1rem;
@@ -11150,6 +11158,13 @@ textarea.form-control-lg {
 
 nav {
   z-index: 3;
+}
+nav .btn .navbar-toggler-icon {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+nav .btn:hover .navbar-toggler {
+  border-color: #fff;
 }
 
 .main-menu {
@@ -11226,11 +11241,7 @@ nav {
   display: block;
   margin: auto;
   padding-top: 8px;
-  color: #24695c;
-}
-
-.page-container {
-  min-height: calc(100vh - 160px);
+  color: #000;
 }
 
 ul.connections-list {
