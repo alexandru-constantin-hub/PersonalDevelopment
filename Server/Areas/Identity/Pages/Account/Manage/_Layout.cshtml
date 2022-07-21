@@ -9,18 +9,30 @@
     }
 }
 
-<h1>Manage your account</h1>
+<div class="row">
+    <div class="col-10">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3 class="pt-3">Manage your account</h3>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item active">Change your account settings</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<div>
-    <h2>Change your account settings</h2>
-    <hr />
-    <div class="row">
-        <div class="col-md-3">
-            <partial name="_ManageNav" />
-        </div>
-        <div class="col-md-9">
-            @RenderBody()
-        </div>
+<div class="row">
+    <div class="col-sm-12">
+        <partial name="_ManageNav" />
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        @RenderBody()
     </div>
 </div>
 

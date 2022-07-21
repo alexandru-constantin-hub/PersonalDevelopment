@@ -1,12 +1,13 @@
-﻿<div class="col-2 d-flex align-items-center justify-content-end">
-    <div class="bookmark pb-2">
-        <ul>
-            <li><a href="@Link"><i class="bi @Icon"></i></a></li>
-        </ul>
+﻿<div class="row">
+    <div class="pb-3 ms-3">
+
+      <button class="btn btn-primary btn-sm shadow" onclick="location.href='@Link'"><i class="bi @Icon"></i>@ButtonText</button>
+        
     </div>
 </div>
 
 @code {
     [Parameter] public string Link { get; set; }
-    [Parameter] public string Icon { get; set; }
+    [Parameter] public string? Icon { get; set; }
+    [Parameter] public string? ButtonText { get; set; }
 }

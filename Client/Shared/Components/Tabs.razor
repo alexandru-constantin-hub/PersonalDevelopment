@@ -1,0 +1,50 @@
+﻿@inject NavigationManager _nav
+<div class="row">
+    <div class="col-12">
+        <ul class="tab ps-2 shadow-sm">
+            <li class='tab_item @(activ0 ? "active" : "")' ><a class="tab_item_link" href='@("/"+Domain)'><i class="bi bi-journal-plus"></i>Application</a></li>
+            <li class='tab_item @(activ1 ? "active" : "")'><a class="tab_item_link" href='@("/"+Domain+"/learn")'><i class="bi bi-journal-text"></i>More info</a></li>
+            <li class='tab_item @(activ2 ? "active" : "")'><a class="tab_item_link" href='@("/"+Domain+"/qa")'><i class="bi bi-journal-bookmark"></i>Q&A</a></li>
+        </ul>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Domain { get; set; }
+    private bool activ0 { get; set; } = false;
+    private bool activ1 { get; set; } = false;
+    private bool activ2 { get; set; } = false;
+    
+
+    protected override void OnInitialized()
+    {
+
+        if (_nav.ToBaseRelativePath(_nav.Uri).Split("/").Last() == "learn")
+        {
+            activ0 = false;
+            activ1 = true;
+            activ2 = false;
+            
+        } else if (_nav.ToBaseRelativePath(_nav.Uri).Split("/").Last() == "qa")
+        {
+            activ0 = false;
+            activ1 = false;
+            activ2 = true;
+        } else
+        {
+            activ0 = true;
+            activ1 = false;
+            activ2 = false;
+        }
+    }
+}
+
+
+
+
+
+    
+
+   
+

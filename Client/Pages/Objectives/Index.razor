@@ -2,157 +2,166 @@
 @using Microsoft.AspNetCore.Authorization
 @inject HttpClient _client
 @inject IJSRuntime js
-@attribute [Authorize]
 
 
-@if (Model == null)
-{
-    <Loading />
-}
-else
-{
 
-    <div class="row">
-        <div class="col-10">
-            <Breadcrumb BreadcrumbElements=@breadcrumbLink ActivePage="Your objectives" Title="Your objectives" />
-        </div>
-        <Bookmark Link="/objectives/create" Icon="bi-plus-lg" />
+<div class="row">
+    <div class="col-10">
+        <Breadcrumb BreadcrumbElements=@breadcrumbLink ActivePage="Your objectives" Title="Your objectives" />
     </div>
+</div>
+<Tabs Domain="objectives" />
 
-    <div class="row row-cols-1 row-cols-lg-2 g-4">
-        @foreach (var value in Model)
+
+<AuthorizeView>
+    <NotAuthorized>
+        <LoginInvitation />
+    </NotAuthorized>
+
+    <Authorized>
+
+        @if (Model == null)
         {
-            <div class="col">
-                <div class="card h-100 d-flex flex-row p-0 card-values">
+            <Loading />
+        }
+        else
+        {
 
-                    @if (value.ImageLink != null)
-                    {
-                        <div class="card-value-image" style="background-image: url('@value.ImageLink');"></div>
-                    }
+            <Bookmark Link="/objectives/create" ButtonText="Create a new objective" />
+             
+            <div class="row row-cols-1 row-cols-lg-2 g-4">
+                @foreach (var value in Model)
+                {
+                    <div class="col">
+                        <div class="card h-100 d-flex flex-row p-0 card-values">
+
+                            @if (value.ImageLink != null)
+                            {
+                                <div class="card-value-image" style="background-image: url('@value.ImageLink');"></div>
+                            }
 
 
-                    <div class="card-body flex-column justify-content-between">
-                        <div class="value-card-content d-flex flex-column justify-content-between">
-                            <h5 class="card-title pb-2">@value.Name</h5>
-                            <div class="card-text overflow-auto">
-                                <p class="text-muted">@value.Description</p>
-                                <label class="form-label">Deadline</label>
-                                @if (@value.TimeLimit == null)
-                                {
-                                    <p>No deadline</p>
-                                }
-                                <p>@value.TimeLimit?.ToString("MM/dd/yyyy")</p>
-                                <label for="customRange2" class="form-label">Complete procentage</label>
-                                <input type="range" class="form-range" min="0" max="100" id="customRange2" value="@value.CompletedProcentage" disabled>
-                                <output id="num"></output>
-                            </div>
-                        </div>
-                        <div class="footer-card">
-
-                            <div class="d-flex">
-                                <button type="button" class="btn btn-outline-primary btn-sm me-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Actions
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="/objectives/edit/@value.Id">Edit this objective</a></li>
-                                    <li><a class="dropdown-item" type="button" @onclick="(()=>Delete(value.Id))">Delete this objective</a></li>
-                                </ul>
-                                <button class="btn btn-outline-primary btn-sm me-2" data-bs-toggle="collapse" href="#collapseC-@value.Id" role="button" aria-expanded="false" aria-controls="#collapseC-@value.Id">
-                                    Show tasks
-                                </button>
-                                <button class="btn btn-outline-primary btn-sm ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@value.Id" aria-expanded="false" aria-controls="collapse-@value.Id">
-                                    SMART?
-                                </button>
-                            </div>
-
-                            <div class="collapse" id="collapse-@value.Id">
-                                <div class="card card-body mt-2">
-                                    <div class="form-check form-switch">
-                                        @if (value.Specific == true)
+                            <div class="card-body flex-column justify-content-between">
+                                <div class="value-card-content d-flex flex-column justify-content-between">
+                                    <h5 class="card-title pb-2">@value.Name</h5>
+                                    <div class="card-text overflow-auto">
+                                        <p class="text-muted">@value.Description</p>
+                                        <label class="form-label">Deadline</label>
+                                        @if (@value.TimeLimit == null)
                                         {
-                                            <input class="form-check-input" type="checkbox" id="checkbox-Specific-@value.Id" checked disabled>
+                                            <p>No deadline</p>
                                         }
-                                        else
-                                        {
-                                            <input class="form-check-input" type="checkbox" id="checkbox-Specific-@value.Id">
-                                        }
-                                        <label class="form-check-label" for="checkbox-Specific-@value.Id">Specific</label>
-                                    </div>
-                                    <div class="form-check form-switch">
-                                        @if (value.Measurable == true)
-                                        {
-                                            <input class="form-check-input" type="checkbox" id="checkbox-Measurable-@value.Id" checked disabled>
-                                        }
-                                        else
-                                        {
-                                            <input class="form-check-input" type="checkbox" id="checkbox-Measurable-@value.Id" disabled>
-                                        }
-                                        <label class="form-check-label" for="checkbox-Measurable-@value.Id">Measurable</label>
-                                    </div>
-                                    <div class="form-check form-switch">
-                                        @if (value.Relevant == true)
-                                        {
-                                            <input class="form-check-input" type="checkbox" id="checkbox-Relevant-@value.Id" checked disabled>
-                                        }
-                                        else
-                                        {
-                                            <input class="form-check-input" type="checkbox" id="checkbox-Relevant-@value.Id" disabled>
-                                        }
-                                        <label class="form-check-label" for="checkbox-Relevant-@value.Id">Relevant</label>
-                                    </div>
-                                    <div class="form-check form-switch">
-                                        @if (value.Achievable == true)
-                                        {
-                                            <input class="form-check-input" type="checkbox" id="checkbox-Achievable-@value.Id" checked disabled>
-                                        }
-                                        else
-                                        {
-                                            <input class="form-check-input" type="checkbox" id="checkbox-Achievable-@value.Id" disabled>
-                                        }
-                                        <label class="form-check-label" for="checkbox-Achievable-@value.Id">Achievable</label>
-                                    </div>
-                                    <div class="form-check form-switch">
-                                        @if (value.Time == true)
-                                        {
-                                            <input class="form-check-input" type="checkbox" id="checkbox-Time-@value.Id" checked disabled>
-                                        }
-                                        else
-                                        {
-                                            <input class="form-check-input" type="checkbox" id="checkbox-Time-@value.Id" disabled>
-                                        }
-                                        <label class="form-check-label" for="checkbox-Time-@value.Id">Time</label>
+                                        <p>@value.TimeLimit?.ToString("MM/dd/yyyy")</p>
+                                        <label for="customRange2" class="form-label">Complete procentage</label>
+                                        <input type="range" class="form-range" min="0" max="100" id="customRange2" value="@value.CompletedProcentage" disabled>
+                                        <output id="num"></output>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="collapse" id="collapseC-@value.Id">
-                                <div class="card card-body mt-2">
-                                    @if (ObjectiveTaks?.Where(x => x.ObjectiveID == value.Id).Count() > 0)
-                                    {
-                                        <ul class="connections-list">
-                                            @foreach (var item in ObjectiveTaks?.Where(x => x.ObjectiveID == value.Id))
-                                            {
-                                                <li class="connections-item"><a href="/tasks/@item.Tak?.Id">@item.Tak?.Name</a></li>
-                                            }
+                                <div class="footer-card">
+
+                                    <div class="d-flex">
+                                        <button type="button" class="btn btn-outline-primary btn-sm me-2" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Actions
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="/objectives/edit/@value.Id">Edit this objective</a></li>
+                                            <li><a class="dropdown-item" type="button" @onclick="(()=>Delete(value.Id))">Delete this objective</a></li>
                                         </ul>
-                                    }
-                                    else
-                                    {
-                                        <p>There is no task connected to this objective</p>
-                                    }
+                                        <button class="btn btn-outline-primary btn-sm me-2" data-bs-toggle="collapse" href="#collapseC-@value.Id" role="button" aria-expanded="false" aria-controls="#collapseC-@value.Id">
+                                            Show tasks
+                                        </button>
+                                        <button class="btn btn-outline-primary btn-sm ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@value.Id" aria-expanded="false" aria-controls="collapse-@value.Id">
+                                            SMART?
+                                        </button>
+                                    </div>
+
+                                    <div class="collapse" id="collapse-@value.Id">
+                                        <div class="card card-body mt-2">
+                                            <div class="form-check form-switch">
+                                                @if (value.Specific == true)
+                                                {
+                                                    <input class="form-check-input" type="checkbox" id="checkbox-Specific-@value.Id" checked disabled>
+                                                }
+                                                else
+                                                {
+                                                    <input class="form-check-input" type="checkbox" id="checkbox-Specific-@value.Id">
+                                                }
+                                                <label class="form-check-label" for="checkbox-Specific-@value.Id">Specific</label>
+                                            </div>
+                                            <div class="form-check form-switch">
+                                                @if (value.Measurable == true)
+                                                {
+                                                    <input class="form-check-input" type="checkbox" id="checkbox-Measurable-@value.Id" checked disabled>
+                                                }
+                                                else
+                                                {
+                                                    <input class="form-check-input" type="checkbox" id="checkbox-Measurable-@value.Id" disabled>
+                                                }
+                                                <label class="form-check-label" for="checkbox-Measurable-@value.Id">Measurable</label>
+                                            </div>
+                                            <div class="form-check form-switch">
+                                                @if (value.Relevant == true)
+                                                {
+                                                    <input class="form-check-input" type="checkbox" id="checkbox-Relevant-@value.Id" checked disabled>
+                                                }
+                                                else
+                                                {
+                                                    <input class="form-check-input" type="checkbox" id="checkbox-Relevant-@value.Id" disabled>
+                                                }
+                                                <label class="form-check-label" for="checkbox-Relevant-@value.Id">Relevant</label>
+                                            </div>
+                                            <div class="form-check form-switch">
+                                                @if (value.Achievable == true)
+                                                {
+                                                    <input class="form-check-input" type="checkbox" id="checkbox-Achievable-@value.Id" checked disabled>
+                                                }
+                                                else
+                                                {
+                                                    <input class="form-check-input" type="checkbox" id="checkbox-Achievable-@value.Id" disabled>
+                                                }
+                                                <label class="form-check-label" for="checkbox-Achievable-@value.Id">Achievable</label>
+                                            </div>
+                                            <div class="form-check form-switch">
+                                                @if (value.Time == true)
+                                                {
+                                                    <input class="form-check-input" type="checkbox" id="checkbox-Time-@value.Id" checked disabled>
+                                                }
+                                                else
+                                                {
+                                                    <input class="form-check-input" type="checkbox" id="checkbox-Time-@value.Id" disabled>
+                                                }
+                                                <label class="form-check-label" for="checkbox-Time-@value.Id">Time</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="collapse" id="collapseC-@value.Id">
+                                        <div class="card card-body mt-2">
+                                            @if (ObjectiveTaks?.Where(x => x.ObjectiveID == value.Id).Count() > 0)
+                                            {
+                                                <ul class="connections-list">
+                                                    @foreach (var item in ObjectiveTaks?.Where(x => x.ObjectiveID == value.Id))
+                                                    {
+                                                        <li class="connections-item"><a href="/tasks/@item.Tak?.Id">@item.Tak?.Name</a></li>
+                                                    }
+                                                </ul>
+                                            }
+                                            else
+                                            {
+                                                <p>There is no task connected to this objective</p>
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
             </div>
+
         }
-    </div>
+    </Authorized>
 
-
-
-
-
-}
+</AuthorizeView>
 
 @code {
     private List<Objective> Model;
@@ -179,8 +188,8 @@ else
 
     public Dictionary<string, string> breadcrumbLink { get; set; } =
     new Dictionary<string, string>()
-                                      {
+                                                  {
          { "Home", "/" }
-                                      };
+                                                  };
 
 }

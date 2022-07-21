@@ -10,22 +10,22 @@
     <title>@ViewData["Title"] - PersonalDevelopment.Server</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/Identity/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/Identity/css/site.css" />
+        @*<link rel="stylesheet" href="~/Identity/lib/bootstrap/dist/css/bootstrap.css" />*@
+        <link rel="stylesheet" href="/css/app.css" />
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+       @* <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
               integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous"
               asp-fallback-href="~/Identity/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/Identity/css/site.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/Identity/css/site.css" asp-append-version="true" />*@
     </environment>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" href="~/">PersonalDevelopment.Server</a>
+                <a class="navbar-brand" href="/"><img src="/img/logo.svg" width="50px" class="pe-2">Personaldevelopment.space</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -51,20 +51,21 @@
 
     <div class="container">
         <partial name="_CookieConsentPartial" optional />
-        <main role="main" class="pb-1">
+        <main role="main" class="pb-1" id="main-server">
             @RenderBody()
         </main>
     </div>
-    <footer class="footer border-top pl-3 text-muted">
+    <footer class="footer w-100">
         <div class="container">
-        &copy; 2022 - PersonalDevelopment.Server
-            @{
-                var foundPrivacy = Url.Page("/Privacy", new { area = "" });
-            }
-            @if (foundPrivacy != null)
-            {
-                <a asp-area="" asp-page="/Privacy">Privacy</a>
-            }
+            <div class="row">
+                <div class="col-md-6">
+                    <p>Copyright© @DateTime.Now.ToString("yyyy"). All rights reserved.</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="float-end">Made with <i class="bi bi-heart"></i> by Personaldevelopment.space team</p>
+                </div>
+            </div>
+
         </div>
     </footer>
 

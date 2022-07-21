@@ -2,19 +2,18 @@
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
-<div class="row">
-    <div class="col-10">
-        <Breadcrumb BreadcrumbElements=@breadcrumbLink ActivePage="Edit your objective" Title="Edit your objective" />
+ <div class="row">
+        <div class="col-10">
+             <Breadcrumb BreadcrumbElements=@breadcrumbLink ActivePage="Edit your objective" Title="Edit your objective" />
+        </div>
     </div>
-    <BookmarkBack />
-</div>
+
+<Tabs Domain="objectives"/>
 <div class="row">
-     <FormComponentObjectives ButtonText="Update" OnValidSubmit="@EditObjective" objective="objective" CancelLink="/objectives" />
+    <div class="col-12">
+        <FormComponentObjectives ButtonText="Update" OnValidSubmit="@EditObjective" objective="objective" CancelLink="/objectives" />
+     </div>
 </div>
-
-
-
-
 
 @code {
     [Parameter] public int id { get; set; }

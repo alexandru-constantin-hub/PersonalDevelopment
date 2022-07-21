@@ -5340,7 +5340,7 @@ textarea.form-control-lg {
   background-color: rgba(255, 255, 255, 0.85);
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0.5rem 1rem rgba(25, 124, 207, 0.15);
   border-radius: 0.25rem;
 }
 .toast.showing {
@@ -6294,6 +6294,30 @@ textarea.form-control-lg {
     mask-position: -200% 0%;
   }
 }
+.tab {
+  padding-left: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  list-style-type: none;
+  font-size: 1rem;
+  background-color: #fff;
+}
+.tab_item {
+  padding: 0.75rem;
+  text-align: center;
+}
+.tab_item_link {
+  text-decoration: none;
+}
+.tab_item_link .bi {
+  padding-right: 5px;
+}
+
+.tab .tab_item.active {
+  border-bottom: 2px solid #24695c;
+}
+
 .clearfix::after {
   display: block;
   clear: both;
@@ -6611,15 +6635,15 @@ textarea.form-control-lg {
 }
 
 .shadow {
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 0 0.5rem 1rem rgba(25, 124, 207, 0.15) !important;
 }
 
 .shadow-sm {
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+  box-shadow: 0 0.125rem 0.25rem rgba(25, 124, 207, 0.075) !important;
 }
 
 .shadow-lg {
-  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+  box-shadow: 0 1rem 3rem rgba(25, 124, 207, 0.175) !important;
 }
 
 .shadow-none {
@@ -11147,6 +11171,10 @@ textarea.form-control-lg {
   min-height: calc(100vh - 180px);
 }
 
+#main-server {
+  min-height: calc(100vh - 150px);
+}
+
 .page-header {
   padding-bottom: 1rem;
   padding-top: 1rem;
@@ -11170,7 +11198,7 @@ nav .btn:hover .navbar-toggler {
 .main-menu {
   background-color: #fff;
   position: absolute;
-  top: 73px;
+  top: 65px;
   z-index: 3;
   display: block;
   width: 100%;
@@ -11180,37 +11208,16 @@ nav .btn:hover .navbar-toggler {
 
 .cover-page {
   display: block;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  bottom: 0;
+  right: 0;
   background-color: #343a40;
   opacity: 75%;
   z-index: 1;
 }
 
-/*// more button in card
-
-.setting-list {
-    position: absolute;
-    right: 10px;
-    top: 14px;
-    display: inline-block;
-    z-index: 1;
-    background-color: $white;
-}
-
-// Show connection in card
-
-.show-connections {
-    position: absolute;
-    right: 10px;
-    bottom: 14px;
-    display: inline-block;
-    z-index: 1;
-    background-color: $white;
-}*/
 .bookmark {
   text-align: right;
 }
@@ -11269,6 +11276,41 @@ ul.connections-list li.connections-item::before {
   background-attachment: fixed;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;*/
+}
+
+.login-social-title {
+  position: relative;
+  z-index: 1;
+}
+.login-social-title:before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #adb5bd;
+  z-index: -1;
+}
+.login-social-title h6, .login-social-title .h6 {
+  color: #adb5bd;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #fff;
+}
+
+.login-social {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.login-social_icon {
+  width: 35px;
+  height: 35px;
+  border-radius: 5px;
 }
 
 .card-status {

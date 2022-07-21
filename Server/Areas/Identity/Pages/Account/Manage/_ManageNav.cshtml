@@ -2,7 +2,23 @@
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
-<ul class="nav nav-pills flex-column">
+
+<div class="row">
+    <div class="col-12">
+        <ul class="tab ps-2 shadow-sm">
+            <li class="tab_item @ManageNavPages.IndexNavClass(ViewContext)"><a class="tab_item_link" id="profile" asp-page="./Index"><i class="bi bi-person"></i>Profile</a></li>
+            <li class="tab_item @ManageNavPages.EmailNavClass(ViewContext)"><a class="tab_item_link" id="email" asp-page="./Email"><i class="bi bi-at"></i>Email</a></li>
+            <li class="tab_item @ManageNavPages.ChangePasswordNavClass(ViewContext)"><a class="tab_item_link" id="change-password" asp-page="./ChangePassword"><i class="bi bi-check"></i>Password</a></li>
+             @if (hasExternalLogins)
+            {
+                 <li class="tab_item"><a id="external-login"  class="tab_item_link @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins"><i class="bi bi-box-arrow-up-right"></i>External logins</a></li>
+            }
+            <li class="tab_item @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)"><a class="tab_item_link" id="two-factor" asp-page="./TwoFactorAuthentication"><i class="bi bi-box-arrow-up-left"></i>Two-factor authentication</a></li>
+            <li class="tab_item @ManageNavPages.PersonalDataNavClass(ViewContext)"><a class="tab_item_link" id="personal-data" asp-page="./PersonalData"><i class="bi bi-person-check"></i>Personal data</a></li>
+        </ul>
+    </div>
+</div>
+@*<ul class="nav nav-pills flex-column">
     <li class="nav-item"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Profile</a></li>
     <li class="nav-item"><a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Email</a></li>
     <li class="nav-item"><a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Password</a></li>
@@ -12,4 +28,4 @@
     }
     <li class="nav-item"><a class="nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">Two-factor authentication</a></li>
     <li class="nav-item"><a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Personal data</a></li>
-</ul>
+</ul>*@

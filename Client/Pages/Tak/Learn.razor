@@ -1,0 +1,19 @@
+﻿@page "/tasks/learn"
+
+<div class="row">
+        <div class="col-10">
+            <Breadcrumb BreadcrumbElements=@breadcrumbLink ActivePage="More info" Title="More info" />
+        </div>
+    </div>
+
+    <Tabs Domain="tasks" />
+
+@code {
+    public Dictionary<string, string> breadcrumbLink { get; set; } =
+        new Dictionary<string, string>()
+        {
+        { "Home", "/" },
+        { "Tasks", "/tasks" }
+        };
+
+}

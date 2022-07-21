@@ -14,11 +14,11 @@ else
     <div class="row">
         <div class="col-10">
             <Breadcrumb BreadcrumbElements=@breadcrumbLink ActivePage="Values list" Title="Your values" />
-        </div>
-        <Bookmark Link="/values/create" Icon="bi-plus-lg" />
+        </div>  
     </div>
+    <Tabs Domain="values"/>
 
-
+    <Bookmark Link="/values/create" ButtonText="Create a new values" />
 
     <div class="row row-cols-1 row-cols-lg-2 g-4">
         @foreach (var value in Model)
@@ -45,7 +45,7 @@ else
                                     Actions
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="/objectives/edit/@value.Id">Edit this value</a></li>
+                                    <li><a class="dropdown-item" href="/values/edit/@value.Id">Edit this value</a></li>
                                     <li><a class="dropdown-item" type="button" @onclick="(()=>Delete(value.Id))">Delete this value</a></li>
                                 </ul>
                                 <button class="btn btn-outline-primary btn-sm me-2" data-bs-toggle="collapse" href="#collapseC-@value.Id" role="button" aria-expanded="false" aria-controls="#collapseC-@value.Id">

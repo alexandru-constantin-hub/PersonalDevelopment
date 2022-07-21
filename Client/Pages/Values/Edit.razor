@@ -6,8 +6,8 @@
     <div class="col-10">
         <Breadcrumb BreadcrumbElements=@breadcrumbLink ActivePage="Edit your value" Title="Edit your value" />
     </div>
-    <BookmarkBack />
 </div>
+<Tabs Domain="values"/>
 <div class="row">
         <FormComponentValues ButtonText="Update" OnValidSubmit="@EditValue" value="value" CancelLink="/values"/> 
 </div>

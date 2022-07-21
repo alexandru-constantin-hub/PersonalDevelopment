@@ -1,0 +1,29 @@
+.tab {
+    padding-left: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    list-style-type: none;
+    font-size: 1rem;
+    background-color: $white;
+
+    &_item {
+        padding: .75rem;
+        text-align: center;
+
+        &_link {
+            text-decoration: none;
+
+            .bi {
+                padding-right: 5px;
+            }
+        }
+    }
+    
+}
+
+.tab .tab_item.active {
+    border-bottom: 2px solid $primary;
+}
+
+
